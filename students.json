@@ -78,7 +78,7 @@
     "name": "Yoana De Silva",
     "category": "Kids",
     "classDay": "Sunday",
-    "classTime": "12:30 PM",
+    "classTime": "11:00 AM",
     "song": "You Are My Sunshine / Jamaica Farewell",
     "artist": ""
   },
@@ -87,7 +87,7 @@
     "name": "Evaan De Silva",
     "category": "Kids",
     "classDay": "Sunday",
-    "classTime": "12:30 PM",
+    "classTime": "11:00 AM",
     "song": "Rain Rain Go Away / Baby Shark",
     "artist": ""
   },
@@ -125,15 +125,6 @@
     "classDay": "Sunday",
     "classTime": "5:00 PM",
     "song": "Me Rata Mage Rata",
-    "artist": ""
-  },
-  {
-    "id": "s86",
-    "name": "Chathusari Ruhunage",
-    "category": "Youth",
-    "classDay": "Friday",
-    "classTime": "5:00 PM",
-    "song": "Una Paloma Blanca",
     "artist": ""
   }
 ]
