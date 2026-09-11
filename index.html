@@ -317,6 +317,7 @@ h1 .wi{display:inline-block}
 }
 .finder.stuck{box-shadow:0 12px 30px -22px rgba(25,29,28,.55)}
 .finder-in{max-width:700px;margin:0 auto}
+.finder-meta{max-width:700px;margin:0 auto}
 .findhead{max-width:640px;margin:40px auto 16px;text-align:center}
 .slabel{
   font-family:var(--display);font-weight:700;
@@ -397,6 +398,38 @@ h1 .wi{display:inline-block}
   .clear{font-size:30px;padding:10px 13px}
 }
 
+/* ---------- the bar in use ----------
+   At rest the search is the hero of the page and is welcome to the height it
+   asks for. The moment it is in use it parks at the top of the screen, and a
+   parked bar has to earn its space back: everything it covers is the answer
+   the parent came for. So it folds to one short line — the field and a
+   Search key, nothing else — and gives the screen back to the result.
+
+   It keys off a name being in the field, not off the field having focus: the
+   keyboard closing, or a tap anywhere else, must not hand the bar back the
+   half of the screen the answer is standing on. */
+body.compact .finder{padding:9px var(--pad) 10px}
+body.compact .searchrow{flex-direction:row;gap:9px}
+body.compact #q{
+  font-size:17px;min-height:50px;padding:13px 44px 13px 46px;
+  border-width:1.5px;border-radius:13px;
+}
+body.compact .field .mag{width:20px;height:20px;left:15px}
+body.compact .clear{font-size:23px;padding:7px 9px}
+body.compact .gobtn{
+  width:auto;min-height:50px;padding:0 17px;border-radius:13px;gap:0;
+}
+body.compact .gobtn svg{width:23px;height:23px}
+body.compact .gobtn .gt{display:none}
+body.compact .sugg{margin-top:9px}
+/* the list of names is a picker, not a reading page: tighter rows put more
+   of them on screen and leave the answer underneath in view */
+body.compact .sugg-hd{padding:9px 14px;font-size:10px}
+body.compact .sugg-scroll{max-height:min(24vh,200px)}
+body.compact .sg{padding:11px 14px;gap:11px}
+body.compact .sg .sg-nm{font-size:clamp(16.5px,4.4vw,18.5px)}
+body.compact .sg .sg-sub{font-size:11.5px;margin-top:3px}
+
 /* ---------- search mode ----------
    Tap the field and the bar parks itself at the top of the screen and stays
    there: the results below it reserve a full screen of height, so the page
@@ -414,11 +447,7 @@ body.searching .sec-label{margin-top:26px}
   border:1px solid var(--gold-rim);border-radius:16px;
   box-shadow:var(--lift-2);overflow:hidden;
 }
-.sugg-scroll{max-height:min(38vh,300px);overflow-y:auto;-webkit-overflow-scrolling:touch}
-/* while the names are listed they carry the count themselves, so the tally
-   and the reset button stand down and keep the bar short */
-.finder.has-sugg .tally,
-.finder.has-sugg .resetbtn{display:none}
+.sugg-scroll{max-height:min(26vh,220px);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .sugg-hd{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:11px 15px;border-bottom:1px solid var(--line);
@@ -698,12 +727,6 @@ body:not(.writer) .kill{display:none}
 .sheetbtn svg{flex:none;width:21px;height:21px}
 .sheetbtn:hover{filter:brightness(1.07)}
 .sheetbtn:active{transform:scale(.97)}
-.sheetbtn.alt{
-  background:var(--card);color:var(--gold-3);
-  border:1.5px solid var(--gold-rim);box-shadow:none;
-}
-.sheetbtn.alt:hover{border-color:var(--gold-2);
-  background:color-mix(in srgb, var(--gold-1) 18%, var(--card))}
 @media (max-width:430px){
   .score-acts{padding:0 14px 16px;gap:9px}
   .sheetbtn{flex:1 1 100%;min-height:62px;font-size:17px}
@@ -1524,15 +1547,18 @@ window.ShalomRosterGen = (function(){
           <input id="q" type="search" placeholder="Type the participant&rsquo;s name" spellcheck="false" aria-label="Search participant by name">
           <button class="clear" id="clear" type="button" aria-label="Clear search" hidden>&times;</button>
         </div>
-        <button class="gobtn" type="submit">
+        <button class="gobtn" type="submit" aria-label="Search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-          Search
+          <span class="gt">Search</span>
         </button>
       </form>
       <div class="sugg" id="sugg" hidden></div>
-      <p class="tally" data-render="tally"></p>
-      <button class="resetbtn" id="reset" type="button" hidden>Show all six sessions</button>
     </div>
+  </div>
+
+  <div class="finder-meta">
+    <p class="tally" data-render="tally"></p>
+    <button class="resetbtn" id="reset" type="button" hidden>Show all six sessions</button>
   </div>
 
   <div class="sec-label"><span data-render="seclabel">The six sessions</span></div>
@@ -1929,13 +1955,7 @@ window.ShalomRosterGen = (function(){
       "</button>" +
 
       '<div class="score-acts">' +
-        '<button class="sheetbtn" type="button" data-sheet="' + esc(r.id) + '">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-            'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" ' +
-            'aria-hidden="true"><path d="M12 3v13"/><path d="M7 12l5 5 5-5"/>' +
-            '<path d="M4 21h16"/></svg>' +
-          "Download score sheet</button>" +
-        '<button class="sheetbtn alt" type="button" data-print="' + esc(r.id) + '">' +
+        '<button class="sheetbtn" type="button" data-print="' + esc(r.id) + '">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
             'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" ' +
             'aria-hidden="true"><path d="M6 9V3h12v6"/>' +
@@ -2020,23 +2040,16 @@ window.ShalomRosterGen = (function(){
   }
 
   /* ---------- taking the sheet away ----------
-     A parent should be able to keep their child's sheet. Two ways out: saved
-     as a file, or straight to the printer, which on a phone is also how a
-     PDF is made. The saved file carries no fonts, no scripts and no links,
-     so it still opens years from now with no network. */
+     A parent should be able to keep their child's sheet. One way out: straight
+     to the printer, which on a phone and on every desktop browser is also how
+     a PDF is saved. The printed document carries no fonts, no scripts and no
+     links, so it renders the same anywhere with no network. */
 
   function rowById(id){
     for(var i = 0; i < state.length; i++){
       if(String(state[i].id) === String(id)) return state[i];
     }
     return null;
-  }
-
-  /* a file name a phone, a Mac and Windows will all accept */
-  function safeFile(name){
-    var out = String(name == null ? "" : name).replace(/[^A-Za-z0-9 '.-]+/g, " ");
-    out = out.replace(/  +/g, " ").replace(/^ +| +$/g, "");
-    return out || "Score sheet";
   }
 
   function sheetFbBlock(title, text){
@@ -2163,27 +2176,6 @@ window.ShalomRosterGen = (function(){
       "</body></html>";
   }
 
-  function downloadSheet(r){
-    var file = "Score sheet - " + safeFile(r.name) + " - Shalom 2026.html";
-    try{
-      var blob = new Blob([sheetDoc(r, false)], {type:"text/html;charset=utf-8"});
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      if(typeof a.download === "undefined"){
-        window.open(url, "_blank");         // older iOS — hand it to the tab
-      } else {
-        a.href = url; a.download = file; a.rel = "noopener";
-        a.style.display = "none";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      }
-      setTimeout(function(){ URL.revokeObjectURL(url); }, 20000);
-    }catch(e){
-      printSheet(r);                        // no Blob — the printer still works
-    }
-  }
-
   function printSheet(r){
     var w = null;
     try{ w = window.open("", "_blank"); }catch(e){ w = null; }
@@ -2236,6 +2228,7 @@ window.ShalomRosterGen = (function(){
     }
 
     slot("count").textContent = state.length;
+    syncBar();
 
     var sched = slot("sched");
     sched.classList.toggle("is-results", !!query);
@@ -2323,12 +2316,6 @@ window.ShalomRosterGen = (function(){
       b.addEventListener("click", function(){ toggleScore(b); });
     });
 
-    Array.prototype.forEach.call(all("[data-sheet]"), function(b){
-      b.addEventListener("click", function(){
-        var r = rowById(b.getAttribute("data-sheet"));
-        if(r) downloadSheet(r);
-      });
-    });
     Array.prototype.forEach.call(all("[data-print]"), function(b){
       b.addEventListener("click", function(){
         var r = rowById(b.getAttribute("data-print"));
@@ -2363,7 +2350,8 @@ window.ShalomRosterGen = (function(){
        under it, so nothing is allowed to scroll. Outside search mode, a
        result far down the page is still brought up to meet the eye. */
     if(searching){
-      pinTop(false);
+      if(query && !$(".sched .box.match")) revealMatch();
+      else pinTop(false);
     } else if(booted && opts.animate && query && sched.firstChild){
       var top = sched.getBoundingClientRect().top;
       if(top > window.innerHeight * 0.5){
@@ -2665,7 +2653,11 @@ window.ShalomRosterGen = (function(){
      the bar parked. And after every keystroke, if the bar has drifted down
      again, it is put straight back. */
 
-  var searching = false, picking = false, blurTimer = null;
+  /* settled: the list of names is a picker for what is being typed. Once a
+     name has been chosen — tapped, or searched for outright — the picking is
+     over and the list stands down, so it cannot reopen on top of the answer
+     it was used to find. Editing the text starts the picking again. */
+  var searching = false, picking = false, settled = false, blurTimer = null;
 
   /* html carries scroll-behavior:smooth, and "auto" means "whatever the CSS
      says" — so an unasked-for smooth scroll used to be started on every
@@ -2714,12 +2706,51 @@ window.ShalomRosterGen = (function(){
     setTimeout(function(){ pinNow(false); }, 170);
   }
 
+  /* Parking the bar is only half the job. A name that was searched for has
+     to be the first thing under it — not the count, not the ruled label, and
+     certainly not hidden behind the bar itself. So measure what the bar is
+     covering and put the match just clear of it.
+
+     Same reasoning as pinTop: the answer is shorter than the six sessions, so
+     the page shrinks and the browser trims the scroll a frame or two later.
+     Say it again once the dust has settled. */
+  function revealNow(){
+    /* Nothing found is its own answer: then the thing to bring up is the
+       count and the way back to the six sessions, which is the strip that
+       sits directly under the bar. Measuring the target rather than the bar
+       matters — a parked sticky bar's own rectangle always reads 0, so it
+       cannot say how far the page has run past it. */
+    var m = $(".sched .box.match") || $(".finder-meta");
+    if(!m){ pinNow(false); return; }
+    var f = $(".finder");
+    var bar = f ? f.getBoundingClientRect().height : 0;
+    var y = (window.pageYOffset || document.documentElement.scrollTop || 0) +
+            m.getBoundingClientRect().top - bar - 12;
+    scrollToY(Math.max(0, Math.round(y)), false);
+  }
+
+  function revealMatch(){
+    revealNow();
+    if(window.requestAnimationFrame){
+      window.requestAnimationFrame(revealNow);
+    }
+    setTimeout(revealNow, 180);
+    setTimeout(revealNow, 430);             // after the keyboard has gone
+  }
+
+  /* Folded whenever there is a name in the field, or the field is in hand —
+     so the bar cannot quietly unfold over the answer when focus wanders. */
+  function syncBar(){
+    document.body.classList.toggle("compact", searching || !!query);
+  }
+
   function enterSearch(){
     picking = false;
     if(!searching){
       searching = true;
       document.body.classList.add("searching");
     }
+    syncBar();
     pinTop(true);
     renderSugg();
   }
@@ -2728,6 +2759,7 @@ window.ShalomRosterGen = (function(){
     if(!searching) return;
     searching = false;
     document.body.classList.remove("searching");
+    syncBar();
     hideSugg();
   }
 
@@ -2749,7 +2781,7 @@ window.ShalomRosterGen = (function(){
   function renderSugg(){
     var box = $("#sugg");
     if(!box) return;
-    if(!searching || !query){ hideSugg(); return; }
+    if(!searching || !query || settled){ hideSugg(); return; }
 
     var found = matchList();
     if(found.length === 1 &&
@@ -2796,6 +2828,7 @@ window.ShalomRosterGen = (function(){
 
   function pickName(id){
     picking = false;
+    settled = true;
     var r = rowById(id);
     if(!r) return;
     $("#q").value = r.name;
@@ -2804,16 +2837,17 @@ window.ShalomRosterGen = (function(){
     hideSugg();
     $("#q").blur();                         // the keyboard goes, the bar stays
     render({animate:true});
-    pinTop(false);
+    revealMatch();
   }
 
   /* ---------- wiring ---------- */
 
   $("#searchform").addEventListener("submit", function(e){
     e.preventDefault();
+    settled = true;
     hideSugg();
     $("#q").blur();
-    pinTop(false);
+    revealMatch();
   });
   $("#q").addEventListener("focus", enterSearch);
   $("#q").addEventListener("blur", function(){
@@ -2829,6 +2863,7 @@ window.ShalomRosterGen = (function(){
   });
   $("#q").addEventListener("input", function(e){
     var was = !!query;
+    settled = false;                        // the name is being typed again
     query = e.target.value.trim();
     $("#clear").hidden = !query;
     render({animate: was !== !!query});
@@ -2836,7 +2871,7 @@ window.ShalomRosterGen = (function(){
   });
 
   function clearSearch(focus){
-    $("#q").value = ""; query = ""; $("#clear").hidden = true;
+    $("#q").value = ""; query = ""; settled = false; $("#clear").hidden = true;
     hideSugg();
     render({animate:true});
     if(focus) $("#q").focus(); else exitSearch();
