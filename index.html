@@ -1,3 +1,8 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F6F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1312" media="(prefers-color-scheme: dark)">
 <title>Shalom Guitar Competition 2026</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
@@ -129,7 +134,15 @@
 .box[data-s="oct4a"]{--accent:var(--s6);--tint:var(--s6t)}
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+/* hidden has to mean hidden: a display of our own outranks the browser's own
+   rule for [hidden], which is how "Show all six sessions" used to sit there
+   with nothing to show. */
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* a phone must never pan left and right. clip, not hidden, so the sticky
+   search bar still sticks. */
+html,body{max-width:100%;overflow-x:clip}
+@supports not (overflow-x:clip){ html,body{overflow-x:hidden} }
 body{
   position:relative;
   background:var(--paper);
@@ -343,13 +356,13 @@ h1 .wi{display:inline-block}
 .clear:hover{color:var(--ink);background:var(--sunk)}
 .gobtn{
   flex:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  font-family:var(--body);font-size:18px;font-weight:700;letter-spacing:.01em;
+  font-family:var(--body);font-size:21px;font-weight:700;letter-spacing:.01em;
   background:linear-gradient(178deg, var(--gold-1), var(--gold-2));
   color:var(--gold-ink);border:0;border-radius:16px;
-  padding:0 34px;min-height:64px;cursor:pointer;box-shadow:var(--lift);
+  padding:0 42px;min-height:70px;cursor:pointer;box-shadow:var(--lift);
   transition:filter .2s var(--ease), transform .14s var(--ease), box-shadow .2s var(--ease);
 }
-.gobtn svg{flex:none;width:20px;height:20px}
+.gobtn svg{flex:none;width:24px;height:24px}
 .gobtn:hover{filter:brightness(1.08) saturate(1.1);box-shadow:var(--lift-2)}
 .gobtn:active{transform:scale(.97)}
 .tally{
@@ -369,19 +382,79 @@ h1 .wi{display:inline-block}
 .resetbtn:hover{border-color:var(--gold-2);color:var(--gold-3);
   background:color-mix(in srgb, var(--gold-1) 22%, var(--card))}
 .resetbtn:active{transform:scale(.97)}
-/* on a phone the search is the whole point of the page — give it the room */
+/* on a phone the search is the whole point of the page — give it the room.
+   #q stays at 16px or larger: anything smaller and iOS zooms the page in the
+   moment the field is tapped, which is what made the site "go away". */
 @media (max-width:560px){
   .searchrow{flex-direction:column;gap:12px}
-  #q{font-size:20px;padding:22px 52px 22px 54px;min-height:70px;border-radius:18px}
+  #q{font-size:20px;padding:22px 54px 22px 54px;min-height:72px;border-radius:18px}
   .field .mag{width:25px;height:25px;left:17px}
-  .gobtn{width:100%;padding:0;min-height:68px;font-size:19px;border-radius:18px}
-  .clear{font-size:27px;padding:9px 12px}
+  .gobtn{
+    width:100%;padding:0;min-height:82px;font-size:25px;
+    border-radius:18px;letter-spacing:.02em;gap:13px;
+  }
+  .gobtn svg{width:28px;height:28px}
+  .clear{font-size:30px;padding:10px 13px}
 }
+
+/* ---------- search mode ----------
+   Tap the field and the bar parks itself at the top of the screen and stays
+   there: the results below it reserve a full screen of height, so the page
+   can no longer grow and shrink under the thumb and drag the bar out of
+   view. The matching names are listed right under the bar. */
+/* vh, not dvh: the reserved height must not shrink when the on-screen
+   keyboard opens, or the bar unparks itself again. */
+body.searching .sched{min-height:76vh}
+body.searching .finder{box-shadow:0 14px 34px -24px rgba(25,29,28,.6)}
+body.searching .sec-label{margin-top:26px}
+
+/* the matching names, directly below the bar */
+.sugg{
+  margin:12px 0 0;background:var(--card);
+  border:1px solid var(--gold-rim);border-radius:16px;
+  box-shadow:var(--lift-2);overflow:hidden;
+}
+.sugg-scroll{max-height:min(38vh,300px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* while the names are listed they carry the count themselves, so the tally
+   and the reset button stand down and keep the bar short */
+.finder.has-sugg .tally,
+.finder.has-sugg .resetbtn{display:none}
+.sugg-hd{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:11px 15px;border-bottom:1px solid var(--line);
+  background:color-mix(in srgb, var(--gold-1) 16%, var(--card));
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--gold-3);
+}
+.sg{
+  display:flex;align-items:center;gap:13px;width:100%;
+  padding:15px 15px;text-align:left;cursor:pointer;
+  background:none;border:0;border-top:1px solid var(--line);
+  font-family:var(--body);color:inherit;
+}
+.sg:first-child{border-top:0}
+.sg:active{background:var(--sunk)}
+@media (hover:hover){ .sg:hover{background:var(--sunk)} }
+.sg .sg-dot{flex:none;width:14px;height:18px;color:var(--gold-2)}
+.sg .sg-dot svg{display:block;width:100%;height:auto}
+.sg .sg-txt{flex:1;min-width:0}
+.sg .sg-nm{
+  display:block;font-size:clamp(18px,5vw,21px);font-weight:700;
+  letter-spacing:-.015em;line-height:1.25;color:var(--ink);
+  overflow-wrap:break-word;
+}
+.sg .sg-sub{
+  display:block;font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+  color:var(--ink3);margin-top:5px;
+}
+.sg .sg-chev{flex:none;width:17px;height:17px;color:var(--ink3)}
+.sugg .sg-none{padding:18px 15px;color:var(--ink3);font-size:14px;text-align:center}
 
 /* ---------- ruled labels ---------- */
 .sec-label{display:flex;align-items:center;gap:15px;margin:40px 0 18px}
 .sec-label span{
-  flex:none;font-family:var(--mono);font-size:clamp(11.5px,3vw,13px);font-weight:500;
+  flex:0 1 auto;min-width:0;
+  font-family:var(--mono);font-size:clamp(11.5px,3vw,13px);font-weight:500;
   letter-spacing:.18em;text-transform:uppercase;color:var(--brass);
 }
 .sec-label::after{
@@ -390,8 +463,9 @@ h1 .wi{display:inline-block}
 }
 .tier{display:flex;align-items:center;gap:13px;margin:14px 0 2px}
 .tier span{
-  flex:none;font-family:var(--mono);font-size:clamp(11.5px,3.1vw,13.5px);
-  font-weight:500;letter-spacing:.13em;
+  flex:0 1 auto;min-width:0;
+  font-family:var(--mono);font-size:clamp(12.5px,3.4vw,15px);
+  font-weight:500;letter-spacing:.12em;line-height:1.35;
   text-transform:uppercase;color:var(--gold-3);
 }
 .tier::after{
@@ -522,10 +596,13 @@ h1 .wi{display:inline-block}
 
 /* everyone sharing the stage — the programme, set large */
 .box.mates{background:color-mix(in srgb, var(--accent) 5%, var(--card))}
-.row.sm{padding:17px 17px}
-.row.sm .dot{width:16px;height:20px;opacity:.85}
-.row.sm .nm{font-size:clamp(19px,5.4vw,24px);font-weight:700;letter-spacing:-.018em}
-.row.sm .song{font-size:clamp(15px,4.1vw,17px);margin-top:5px}
+.row.sm{padding:19px 17px}
+.row.sm .dot{width:18px;height:23px;opacity:.9}
+.row.sm .nm{
+  font-size:clamp(22px,6.4vw,29px);font-weight:700;letter-spacing:-.022em;
+  line-height:1.2;
+}
+.row.sm .song{font-size:clamp(16px,4.4vw,19px);margin-top:6px;color:var(--ink2)}
 @media (hover:hover){
   .row.sm:hover{background:color-mix(in srgb, var(--accent) 10%, transparent)}
 }
@@ -537,7 +614,7 @@ h1 .wi{display:inline-block}
   .row .dot{order:0}
   .row .badge{order:2;margin-left:27px}
   .row .kill{order:3;margin-left:auto}
-  .row.sm{padding:18px 15px}
+  .row.sm{padding:19px 15px}
 }
 .kill{
   flex:none;background:none;border:0;color:var(--ink3);cursor:pointer;
@@ -584,6 +661,10 @@ body:not(.writer) .kill{display:none}
   overflow-wrap:break-word;text-wrap:balance;
 }
 .m-name h3 .ch{display:inline-block}
+/* the letters are separate boxes so they can be animated one by one, which
+   also let a name break in the middle of itself on a narrow phone. Holding
+   each word together fixes that. */
+.m-name h3 .wd{display:inline-block;white-space:nowrap}
 .m-song{
   display:flex;align-items:center;justify-content:center;gap:10px;
   font-size:clamp(18px,4.8vw,22px);font-weight:600;
@@ -597,6 +678,36 @@ body:not(.writer) .kill{display:none}
 
 /* ---------- the score sheet, folded under the match ---------- */
 .score{border-top:1px solid var(--gold-rim)}
+
+/* the sheet is worth keeping, so it can be taken away as a file or printed.
+   These sit outside the fold, so a parent never has to open the sheet to
+   find them. */
+.score-acts{
+  display:flex;flex-wrap:wrap;gap:10px;
+  padding:0 18px 18px;
+}
+.sheetbtn{
+  flex:1 1 190px;display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;min-height:60px;padding:0 20px;cursor:pointer;
+  font-family:var(--body);font-size:16.5px;font-weight:700;letter-spacing:.01em;
+  border:0;border-radius:14px;
+  background:linear-gradient(178deg, var(--gold-1), var(--gold-2));
+  color:var(--gold-ink);box-shadow:var(--lift);
+  transition:filter .2s var(--ease), transform .14s var(--ease);
+}
+.sheetbtn svg{flex:none;width:21px;height:21px}
+.sheetbtn:hover{filter:brightness(1.07)}
+.sheetbtn:active{transform:scale(.97)}
+.sheetbtn.alt{
+  background:var(--card);color:var(--gold-3);
+  border:1.5px solid var(--gold-rim);box-shadow:none;
+}
+.sheetbtn.alt:hover{border-color:var(--gold-2);
+  background:color-mix(in srgb, var(--gold-1) 18%, var(--card))}
+@media (max-width:430px){
+  .score-acts{padding:0 14px 16px;gap:9px}
+  .sheetbtn{flex:1 1 100%;min-height:62px;font-size:17px}
+}
 
 .score-tog{
   display:flex;align-items:center;gap:12px;width:100%;
@@ -725,7 +836,7 @@ body:not(.writer) .kill{display:none}
 .sc-wait b{color:var(--ink);font-weight:600}
 
 @media (max-width:430px){
-  .score-tog{gap:9px;padding:15px 14px}
+  .score-tog{gap:9px;padding:15px 14px;flex-wrap:wrap}
   .st-pill{font-size:12px;padding:5px 10px}
   .score-in{padding:2px 14px 20px}
   .sc-tbl th,.sc-tbl td{padding:10px 3px}
@@ -1418,6 +1529,7 @@ window.ShalomRosterGen = (function(){
           Search
         </button>
       </form>
+      <div class="sugg" id="sugg" hidden></div>
       <p class="tally" data-render="tally"></p>
       <button class="resetbtn" id="reset" type="button" hidden>Show all six sessions</button>
     </div>
@@ -1816,6 +1928,22 @@ window.ShalomRosterGen = (function(){
           'aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' +
       "</button>" +
 
+      '<div class="score-acts">' +
+        '<button class="sheetbtn" type="button" data-sheet="' + esc(r.id) + '">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+            'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" ' +
+            'aria-hidden="true"><path d="M12 3v13"/><path d="M7 12l5 5 5-5"/>' +
+            '<path d="M4 21h16"/></svg>' +
+          "Download score sheet</button>" +
+        '<button class="sheetbtn alt" type="button" data-print="' + esc(r.id) + '">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+            'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" ' +
+            'aria-hidden="true"><path d="M6 9V3h12v6"/>' +
+            '<rect x="3" y="9" width="18" height="7" rx="2"/>' +
+            '<path d="M6 16h12v5H6z"/></svg>' +
+          "Print / Save as PDF</button>" +
+      "</div>" +
+
       '<div class="score-body" id="' + id + '" hidden>' +
         '<div class="score-in">' +
           '<dl class="sc-meta">' +
@@ -1889,6 +2017,195 @@ window.ShalomRosterGen = (function(){
       G.from(body, {height:0, opacity:0, duration:.4, ease:"power3.out",
         clearProps:"height,opacity"});
     }
+  }
+
+  /* ---------- taking the sheet away ----------
+     A parent should be able to keep their child's sheet. Two ways out: saved
+     as a file, or straight to the printer, which on a phone is also how a
+     PDF is made. The saved file carries no fonts, no scripts and no links,
+     so it still opens years from now with no network. */
+
+  function rowById(id){
+    for(var i = 0; i < state.length; i++){
+      if(String(state[i].id) === String(id)) return state[i];
+    }
+    return null;
+  }
+
+  /* a file name a phone, a Mac and Windows will all accept */
+  function safeFile(name){
+    var out = String(name == null ? "" : name).replace(/[^A-Za-z0-9 '.-]+/g, " ");
+    out = out.replace(/  +/g, " ").replace(/^ +| +$/g, "");
+    return out || "Score sheet";
+  }
+
+  function sheetFbBlock(title, text){
+    text = String(text == null ? "" : text).trim();
+    return "<section class='fb'><h3>" + title + "</h3>" +
+      (text
+        ? "<p>" + esc(text) + "</p>"
+        : "<div class='ru'><i></i><i></i><i></i><i></i></div>") +
+      "</section>";
+  }
+
+  var SHEET_CSS = [
+    "*{box-sizing:border-box}",
+    "html{-webkit-text-size-adjust:100%}",
+    "body{margin:0;padding:24px 20px 40px;background:#fff;color:#191d1c;",
+      "font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}",
+    ".sheet{max-width:760px;margin:0 auto}",
+    ".top{border-bottom:3px solid #c0902e;padding-bottom:15px;margin:0 0 22px}",
+    ".ac{margin:0 0 9px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#82591a}",
+    "h1{margin:0;font-size:26px;line-height:1.15;letter-spacing:-.02em}",
+    ".kind{margin:10px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7c8582}",
+    ".meta{width:100%;border-collapse:collapse;margin:0 0 26px;table-layout:fixed}",
+    ".meta th,.meta td{border:1px solid #dfe3e0;padding:9px 11px;text-align:left;",
+      "vertical-align:top;word-wrap:break-word}",
+    ".meta th{width:34%;font-size:10px;letter-spacing:.1em;text-transform:uppercase;",
+      "color:#7c8582;font-weight:400;background:#f7f8f6}",
+    ".meta td{font-size:14.5px;font-weight:600}",
+    "h2{margin:26px 0 8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#82591a}",
+    "table.sc{width:100%;border-collapse:collapse}",
+    "table.sc th,table.sc td{padding:10px 8px;text-align:left;",
+      "border-bottom:1px solid #dfe3e0;font-weight:400}",
+    "table.sc thead th{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;",
+      "color:#7c8582;border-bottom:1.5px solid #c9cfcb}",
+    "table.sc tbody th{font-size:14px;font-weight:500}",
+    "table.sc .m,table.sc .a{width:92px;text-align:right;white-space:nowrap}",
+    "table.sc .m{color:#7c8582}",
+    "table.sc tfoot th,table.sc tfoot td{border-bottom:0;border-top:2px solid #c0902e;",
+      "padding-top:13px;font-weight:700}",
+    "table.sc tfoot .a{font-size:17px;color:#82591a}",
+    ".bl{display:inline-block;width:46px;height:.95em;border-bottom:1.4px solid #9aa39f}",
+    ".fb{border:1px solid #dfe3e0;border-radius:8px;padding:12px 13px;margin:0 0 10px}",
+    ".fb h3{margin:0;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;",
+      "color:#7c8582;font-weight:400}",
+    ".fb p{margin:9px 0 0;font-size:14px;line-height:1.6}",
+    ".ru{margin:14px 0 4px}",
+    ".ru i{display:block;height:1px;background:#c9cfcb;margin:0 0 15px}",
+    ".sign{width:100%;border-collapse:collapse;margin:22px 0 0}",
+    ".sign td{padding:26px 12px 7px;border-bottom:1px solid #9aa39f;width:50%}",
+    ".sign .lb{border:0;padding:6px 12px 0;font-size:9.5px;letter-spacing:.12em;",
+      "text-transform:uppercase;color:#7c8582}",
+    ".note{margin:24px 0 0;border:1px dashed #c0902e;border-radius:8px;",
+      "padding:11px 13px;font-size:12.5px;color:#4a524f;background:#fdf9ef}",
+    "footer{margin:26px 0 0;padding-top:13px;border-top:1px solid #dfe3e0;",
+      "font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;",
+      "color:#7c8582;text-align:center}",
+    "@media print{body{padding:0}@page{size:A4;margin:14mm}",
+      "body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}"
+  ].join("");
+
+  function sheetDoc(r, autoPrint){
+    var s = sessionById(assign(r));
+    var rows = "", scored = 0, sum = 0;
+
+    CRITERIA.forEach(function(c){
+      var v = markOf(r, c.key);
+      if(v !== null){ scored++; sum += v; }
+      rows += "<tr><th scope='row'>" + esc(c.label) + "</th>" +
+        "<td class='m'>" + c.max + "</td>" +
+        "<td class='a'>" + (v === null ? "<i class='bl'></i>" : esc(v)) + "</td></tr>";
+    });
+
+    var full = scored === CRITERIA.length;
+    var when = s
+      ? esc(s.dow) + ", " + esc(s.date) + " &middot; " + esc(s.time)
+      : "To be confirmed";
+    var usual = [r.classDay, r.classTime].filter(Boolean).join(" ");
+
+    return "<!doctype html><html lang='en'><head><meta charset='utf-8'>" +
+      "<meta name='viewport' content='width=device-width, initial-scale=1'>" +
+      "<title>Score sheet &mdash; " + esc(r.name) + "</title>" +
+      "<style>" + SHEET_CSS + "</style></head><body><div class='sheet'>" +
+
+      "<div class='top'><p class='ac'>Shalom Academy of Performing Arts</p>" +
+      "<h1>Shalom Guitar Competition 2026</h1>" +
+      "<p class='kind'>Official score sheet</p></div>" +
+
+      "<table class='meta'><tbody>" +
+        "<tr><th>Student</th><td>" + esc(r.name) + "</td></tr>" +
+        "<tr><th>Category</th><td>" + esc(r.category) + "</td></tr>" +
+        "<tr><th>Session</th><td>" + when + "</td></tr>" +
+        "<tr><th>Song</th><td>" + (r.song ? esc(r.song) : "&mdash;") + "</td></tr>" +
+        "<tr><th>Artist</th><td>" + (r.artist ? esc(r.artist) : "&mdash;") + "</td></tr>" +
+        "<tr><th>Usual class</th><td>" + (usual ? esc(usual) : "&mdash;") + "</td></tr>" +
+      "</tbody></table>" +
+
+      "<h2>Scoring criteria &amp; evaluation</h2>" +
+      "<table class='sc'><thead><tr><th>Criteria</th>" +
+        "<th class='m'>Full marks</th><th class='a'>Awarded</th></tr></thead>" +
+        "<tbody>" + rows + "</tbody>" +
+        "<tfoot><tr><th scope='row'>Total score</th><td class='m'>" + SCORE_MAX +
+          "</td><td class='a'>" + (full ? esc(sum) : "<i class='bl'></i>") +
+        "</td></tr></tfoot></table>" +
+
+      "<h2>Overall feedback &amp; suggestions for growth</h2>" +
+      sheetFbBlock("Strengths &amp; highlights", r.strengths) +
+      sheetFbBlock("Areas for improvement", r.improve) +
+
+      "<table class='sign'><tbody>" +
+        "<tr><td>" + (r.adjudicator ? esc(r.adjudicator) : "") + "</td><td></td></tr>" +
+        "<tr><td class='lb'>Adjudicator</td><td class='lb'>Signature</td></tr>" +
+      "</tbody></table>" +
+
+      (full ? "" :
+        "<p class='note'>No marks have been entered yet. This is the sheet the " +
+        "adjudicators fill in on the day &mdash; print it as it stands, or save " +
+        "it again once " + esc(String(r.name).split(" ")[0]) +
+        "&rsquo;s session has been judged.</p>") +
+
+      "<footer>Shalom Academy of Performing Arts &middot; October 2026</footer>" +
+      "</div>" +
+      (autoPrint
+        ? "<script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script>"
+        : "") +
+      "</body></html>";
+  }
+
+  function downloadSheet(r){
+    var file = "Score sheet - " + safeFile(r.name) + " - Shalom 2026.html";
+    try{
+      var blob = new Blob([sheetDoc(r, false)], {type:"text/html;charset=utf-8"});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      if(typeof a.download === "undefined"){
+        window.open(url, "_blank");         // older iOS — hand it to the tab
+      } else {
+        a.href = url; a.download = file; a.rel = "noopener";
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 20000);
+    }catch(e){
+      printSheet(r);                        // no Blob — the printer still works
+    }
+  }
+
+  function printSheet(r){
+    var w = null;
+    try{ w = window.open("", "_blank"); }catch(e){ w = null; }
+    if(w && w.document){
+      w.document.open();
+      w.document.write(sheetDoc(r, true));
+      w.document.close();
+      return;
+    }
+    /* the tab was blocked — print from a frame nobody sees */
+    var fr = document.createElement("iframe");
+    fr.setAttribute("aria-hidden", "true");
+    fr.setAttribute("title", "Score sheet");
+    fr.style.cssText =
+      "position:fixed;left:-10000px;top:0;width:820px;height:1160px;border:0";
+    document.body.appendChild(fr);
+    var d = fr.contentWindow.document;
+    d.open(); d.write(sheetDoc(r, false)); d.close();
+    setTimeout(function(){
+      try{ fr.contentWindow.focus(); fr.contentWindow.print(); }catch(e){}
+      setTimeout(function(){ if(fr.parentNode) fr.parentNode.removeChild(fr); }, 60000);
+    }, 350);
   }
 
   /* The searched participant: name large, their session, nothing else. */
@@ -2006,6 +2323,19 @@ window.ShalomRosterGen = (function(){
       b.addEventListener("click", function(){ toggleScore(b); });
     });
 
+    Array.prototype.forEach.call(all("[data-sheet]"), function(b){
+      b.addEventListener("click", function(){
+        var r = rowById(b.getAttribute("data-sheet"));
+        if(r) downloadSheet(r);
+      });
+    });
+    Array.prototype.forEach.call(all("[data-print]"), function(b){
+      b.addEventListener("click", function(){
+        var r = rowById(b.getAttribute("data-print"));
+        if(r) printSheet(r);
+      });
+    });
+
     if(G && booted && opts.animate){
       var tl = G.timeline({defaults:{ease:"power3.out"}});
       tl.from(".sched > .box, .sched > .tier", {
@@ -2029,7 +2359,12 @@ window.ShalomRosterGen = (function(){
       if(query){ strum(.4, .03); noteBurst(); }
     }
 
-    if(booted && opts.animate && query && sched.firstChild){
+    /* In search mode the bar owns the top of the screen and the results sit
+       under it, so nothing is allowed to scroll. Outside search mode, a
+       result far down the page is still brought up to meet the eye. */
+    if(searching){
+      pinTop(false);
+    } else if(booted && opts.animate && query && sched.firstChild){
       var top = sched.getBoundingClientRect().top;
       if(top > window.innerHeight * 0.5){
         sched.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
@@ -2051,11 +2386,15 @@ window.ShalomRosterGen = (function(){
     return out;
   }
 
+  /* one box per letter for the animation, inside one box per word so a name
+     can only ever break where a name should break */
   function splitChars(el){
-    var t = el.textContent;
-    el.innerHTML = t.split("").map(function(ch){
-      return ch === " " ? " " : '<span class="ch">' + esc(ch) + "</span>";
-    }).join("");
+    var words = el.textContent.trim().split(/\s+/);
+    el.innerHTML = words.map(function(w){
+      return '<span class="wd">' + w.split("").map(function(ch){
+        return '<span class="ch">' + esc(ch) + "</span>";
+      }).join("") + "</span>";
+    }).join(" ");
     return el.querySelectorAll(".ch");
   }
 
@@ -2246,6 +2585,8 @@ window.ShalomRosterGen = (function(){
       el.removeAttribute("value");
     });
     root.querySelector('[data-render="seclabel"]').textContent = "The six sessions";
+    var sg = root.querySelector("#sugg");
+    if(sg){ sg.innerHTML = ""; sg.setAttribute("hidden", ""); }
     root.querySelector("#clear").setAttribute("hidden", "");
     root.querySelector("#reset").setAttribute("hidden", "");
     root.querySelector("#wipe").setAttribute("hidden", "");
@@ -2255,6 +2596,7 @@ window.ShalomRosterGen = (function(){
     root.querySelector("#say2").textContent = "";
     root.querySelector("#f-bulk").textContent = "";
     root.querySelector(".finder").classList.remove("stuck");
+    root.querySelector(".finder").classList.remove("has-sugg");
     root.querySelector(".sched").classList.remove("is-results");
     var b = root.querySelector("body");
     if(b) b.className = "";
@@ -2310,23 +2652,194 @@ window.ShalomRosterGen = (function(){
     if(a) a.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(WA_MESSAGE);
   })();
 
+  /* ---------- search mode ----------
+     What went wrong on a phone: the search bar sits halfway down a tall
+     poster, and the results are far shorter than the six session cards. Type
+     a name and the document collapsed to a third of its height, the browser
+     clamped the scroll, and the bar the thumb was resting on vanished
+     upward — you had to drag the page back to find it again.
+
+     Three things hold it still now. The bar parks at the very top the moment
+     the field is touched. The results reserve a screenful of height
+     (body.searching .sched), so the page can never become too short to keep
+     the bar parked. And after every keystroke, if the bar has drifted down
+     again, it is put straight back. */
+
+  var searching = false, picking = false, blurTimer = null;
+
+  /* html carries scroll-behavior:smooth, and "auto" means "whatever the CSS
+     says" — so an unasked-for smooth scroll used to be started on every
+     keystroke, each one interrupting the last, and the bar never arrived.
+     A correction has to land in one frame, so say instant and mean it. */
+  function scrollToY(y, smooth){
+    if(smooth && !reduce){
+      try{ window.scrollTo({top:y, behavior:"smooth"}); return; }
+      catch(e){ window.scrollTo(0, y); return; }
+    }
+    var html = document.documentElement;
+    var had = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    try{ window.scrollTo({top:y, behavior:"instant"}); }
+    catch(e){ window.scrollTo(0, y); }
+    if(window.requestAnimationFrame){
+      window.requestAnimationFrame(function(){ html.style.scrollBehavior = had; });
+    } else {
+      html.style.scrollBehavior = had;
+    }
+  }
+
+  /* The bar is sticky at top:0, so while it is parked its own rectangle reads
+     exactly 0 and there is nothing to do. Any gap above it is how far the
+     page has to come down to park it again — which is all this does. It can
+     only ever pull the bar up into place, never push the reader away from
+     something they scrolled to on purpose. */
+  function pinNow(smooth){
+    var f = $(".finder");
+    if(!f) return;
+    var t = f.getBoundingClientRect().top;
+    if(t <= 0.5) return;                    // parked, or scrolled clean past
+    var y = (window.pageYOffset || document.documentElement.scrollTop || 0) + t;
+    scrollToY(Math.max(0, Math.round(y)), smooth);
+  }
+
+  /* A shorter answer makes a shorter page, and the browser trims the scroll
+     to fit a frame or two later — which is exactly when the bar used to slide
+     away. So park it again once the dust has settled, not only right away. */
+  function pinTop(smooth){
+    pinNow(smooth);
+    if(smooth) return;                      // an animated scroll is in charge
+    if(window.requestAnimationFrame){
+      window.requestAnimationFrame(function(){ pinNow(false); });
+    }
+    setTimeout(function(){ pinNow(false); }, 170);
+  }
+
+  function enterSearch(){
+    picking = false;
+    if(!searching){
+      searching = true;
+      document.body.classList.add("searching");
+    }
+    pinTop(true);
+    renderSugg();
+  }
+
+  function exitSearch(){
+    if(!searching) return;
+    searching = false;
+    document.body.classList.remove("searching");
+    hideSugg();
+  }
+
+  function hideSugg(){
+    var box = $("#sugg");
+    if(!box) return;
+    box.hidden = true;
+    box.innerHTML = "";
+    $(".finder").classList.remove("has-sugg");
+  }
+
+  function matchList(){
+    return state.filter(matchesQuery)
+      .filter(function(r){ return assign(r); })
+      .sort(bySlot);
+  }
+
+  /* the matching names, listed directly under the bar, big enough to thumb */
+  function renderSugg(){
+    var box = $("#sugg");
+    if(!box) return;
+    if(!searching || !query){ hideSugg(); return; }
+
+    var found = matchList();
+    if(found.length === 1 &&
+       String(found[0].name).toLowerCase() === query.toLowerCase()){
+      hideSugg();                           // they are already looking at them
+      return;
+    }
+
+    var head = found.length
+      ? "<div class='sugg-hd'><span>" + found.length +
+          (found.length === 1 ? " name matches" : " names match") +
+        "</span><span>tap to open</span></div>"
+      : "";
+
+    var body = found.length
+      ? found.slice(0, 14).map(function(r){
+          var ss = sessionById(assign(r));
+          return "<button class='sg' type='button' data-pick='" + esc(r.id) + "'>" +
+            "<span class='sg-dot' aria-hidden='true'>" + EIGHTH + "</span>" +
+            "<span class='sg-txt'>" +
+              "<span class='sg-nm'>" + esc(r.name) + "</span>" +
+              "<span class='sg-sub'>" + esc(r.category) + " &middot; " +
+                (ss ? esc(ss.dow) + " " + esc(ss.time) : "session to confirm") +
+              "</span>" +
+            "</span>" +
+            "<svg class='sg-chev' viewBox='0 0 24 24' fill='none' " +
+              "stroke='currentColor' stroke-width='2.4' stroke-linecap='round' " +
+              "aria-hidden='true'><path d='M9 6l6 6-6 6'/></svg>" +
+          "</button>";
+        }).join("")
+      : "<p class='sg-none'>No name like that on the list yet</p>";
+
+    box.innerHTML = head + "<div class='sugg-scroll'>" + body + "</div>";
+    box.hidden = false;
+    $(".finder").classList.add("has-sugg");
+
+    /* a tap blurs the field before it clicks the name, so say so first */
+    Array.prototype.forEach.call(box.querySelectorAll("[data-pick]"), function(b){
+      b.addEventListener("mousedown", function(){ picking = true; });
+      b.addEventListener("touchstart", function(){ picking = true; }, {passive:true});
+      b.addEventListener("click", function(){ pickName(b.getAttribute("data-pick")); });
+    });
+  }
+
+  function pickName(id){
+    picking = false;
+    var r = rowById(id);
+    if(!r) return;
+    $("#q").value = r.name;
+    query = r.name;
+    $("#clear").hidden = false;
+    hideSugg();
+    $("#q").blur();                         // the keyboard goes, the bar stays
+    render({animate:true});
+    pinTop(false);
+  }
+
   /* ---------- wiring ---------- */
 
   $("#searchform").addEventListener("submit", function(e){
     e.preventDefault();
+    hideSugg();
     $("#q").blur();
+    pinTop(false);
+  });
+  $("#q").addEventListener("focus", enterSearch);
+  $("#q").addEventListener("blur", function(){
+    clearTimeout(blurTimer);
+    blurTimer = setTimeout(function(){
+      if(picking) return;                   // a name is being tapped
+      hideSugg();
+      if(!query) exitSearch();              // nothing typed — hand the page back
+    }, 200);
+  });
+  $("#q").addEventListener("keydown", function(e){
+    if(e.key === "Escape" || e.key === "Esc"){ clearSearch(false); $("#q").blur(); }
   });
   $("#q").addEventListener("input", function(e){
     var was = !!query;
     query = e.target.value.trim();
     $("#clear").hidden = !query;
     render({animate: was !== !!query});
+    renderSugg();
   });
 
   function clearSearch(focus){
     $("#q").value = ""; query = ""; $("#clear").hidden = true;
+    hideSugg();
     render({animate:true});
-    if(focus) $("#q").focus();
+    if(focus) $("#q").focus(); else exitSearch();
   }
   $("#clear").addEventListener("click", function(){ clearSearch(true); });
   $("#reset").addEventListener("click", function(){
