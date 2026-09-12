@@ -126,7 +126,7 @@
     "classTime": "5:00 PM",
     "song": "Me Rata Mage Rata",
     "artist": ""
-  },[
+  },
   {
     "id": "s86",
     "name": "Senuli Wilegoda",
@@ -180,6 +180,23 @@
     "classTime": "5:00 PM",
     "song": "Me Rata Mage Rata",
     "artist": ""
+  },
+  {
+    "id": "s92",
+    "name": "Aiden de Silva",
+    "category": "Kids",
+    "classDay": "Saturday",
+    "classTime": "11:30 AM",
+    "song": "Country Roads",
+    "artist": "John Denver"
+  },
+  {
+    "id": "s93",
+    "name": "Kuyana Dissanayake",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Faded",
+    "artist": "Alan Walker"
   }
-]
 ]
