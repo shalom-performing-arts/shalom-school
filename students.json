@@ -60,7 +60,7 @@
   {"id":"s66","name":"Teshini Samarasekara","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Me Wedikawa Jeewithe Ape","artist":""},
   {"id":"s68","name":"Viha Dhanashi","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"You Are My Sunshine","artist":"Christina Perri"},
   {"id":"s69","name":"Adithi Rajapakse","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"","artist":"","note":"Song still to be chosen — shows as a dash on her card until it is set."},
-  {"id":"s71","name":"W.D. Shayeli Aadya Kahawita","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Believer","artist":"Imagine Dragons"},
+  {"id":"s71","name":"W.D. Shayeli Aadya Kahawita","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Have you Ever Seen the Rain","artist":"Creedance Clearwater Revival"},
   {"id":"s74","name":"Adeesha Thehan Weliwatta","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Country Roads (Forever Country)","artist":""},
   {"id":"s75","name":"Theviru Sejan Jayasundara Kumarasiri","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Rain Rain Go Away","artist":""},
   {"id":"s77","name":"Reshawn Vanhoff","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Indunil Gangulal","artist":"Rukantha Gunathilake"},
@@ -126,5 +126,60 @@
     "classTime": "5:00 PM",
     "song": "Me Rata Mage Rata",
     "artist": ""
+  },[
+  {
+    "id": "s86",
+    "name": "Senuli Wilegoda",
+    "category": "Youth",
+    "classDay": "Friday",
+    "classTime": "5:00 PM",
+    "song": "Top of the World",
+    "artist": "The Carpenters"
+  },
+  {
+    "id": "s87",
+    "name": "Dinudi Sihasna Hettiarachchi",
+    "category": "Junior",
+    "classDay": "Saturday",
+    "classTime": "4:30 PM",
+    "song": "Top of the World",
+    "artist": "The Carpenters"
+  },
+  {
+    "id": "s88",
+    "name": "Yenul Lakmeth",
+    "category": "Junior",
+    "classDay": "Sunday",
+    "classTime": "5:00 PM",
+    "song": "You Are My Sunshine",
+    "artist": ""
+  },
+  {
+    "id": "s89",
+    "name": "Divashri Luchyshyaa",
+    "category": "Kids",
+    "classDay": "Sunday",
+    "classTime": "12:30 PM",
+    "song": "",
+    "artist": ""
+  },
+  {
+    "id": "s90",
+    "name": "Aanya Janakananda",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Waka Waka",
+    "artist": "Shakira"
+  },
+  {
+    "id": "s91",
+    "name": "Evan Dias",
+    "category": "Youth",
+    "classDay": "Friday",
+    "classTime": "5:00 PM",
+    "song": "Me Rata Mage Rata",
+    "artist": ""
   }
+]
 ]
