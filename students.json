@@ -64,139 +64,27 @@
   {"id":"s74","name":"Adeesha Thehan Weliwatta","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Country Roads (Forever Country)","artist":""},
   {"id":"s75","name":"Theviru Sejan Jayasundara Kumarasiri","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Rain Rain Go Away","artist":""},
   {"id":"s77","name":"Reshawn Vanhoff","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Indunil Gangulal","artist":"Rukantha Gunathilake"},
-  {"id":"s78","name":"Yulia Samarasekara","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Country Roads","artist":"John Denver"}, {
-    "id": "s79",
-    "name": "Aanya Shemaiah Cooray",
-    "category": "Kids",
-    "classDay": "Wednesday",
-    "classTime": "3:30 PM",
-    "song": "Me Rata Mage Rata and Rosa Male",
-    "artist": ""
-  },
-  {
-    "id": "s80",
-    "name": "Yoana De Silva",
-    "category": "Kids",
-    "classDay": "Sunday",
-    "classTime": "11:00 AM",
-    "song": "You Are My Sunshine / Jamaica Farewell",
-    "artist": ""
-  },
-  {
-    "id": "s81",
-    "name": "Evaan De Silva",
-    "category": "Kids",
-    "classDay": "Sunday",
-    "classTime": "11:00 AM",
-    "song": "Rain Rain Go Away / Baby Shark",
-    "artist": ""
-  },
-  {
-    "id": "s82",
-    "name": "Mikayeel Drahaman",
-    "category": "Youth",
-    "classDay": "Saturday",
-    "classTime": "9:30 AM",
-    "song": "Anagathaye (Mashup with Atha Ran Wiman and Perfect)",
-    "artist": "WAYO / Clarence Wijewardena / Ed Sheeran"
-  },
-  {
-    "id": "s83",
-    "name": "Lehan Soysa",
-    "category": "Youth",
-    "classDay": "Friday",
-    "classTime": "3:30 PM",
-    "song": "You Are My Sunshine",
-    "artist": "Christina Perri"
-  },
-  {
-    "id": "s84",
-    "name": "Amanda Sadali",
-    "category": "Youth",
-    "classDay": "Sunday",
-    "classTime": "5:00 PM",
-    "song": "Dreamers",
-    "artist": "Jung Kook"
-  },
-  {
-    "id": "s85",
-    "name": "Amasha Imandhi",
-    "category": "Kids",
-    "classDay": "Sunday",
-    "classTime": "5:00 PM",
-    "song": "Me Rata Mage Rata",
-    "artist": ""
-  },
-  {
-    "id": "s86",
-    "name": "Senuli Wilegoda",
-    "category": "Youth",
-    "classDay": "Friday",
-    "classTime": "5:00 PM",
-    "song": "Top of the World",
-    "artist": "The Carpenters"
-  },
-  {
-    "id": "s87",
-    "name": "Dinudi Sihasna Hettiarachchi",
-    "category": "Junior",
-    "classDay": "Saturday",
-    "classTime": "4:30 PM",
-    "song": "Top of the World",
-    "artist": "The Carpenters"
-  },
-  {
-    "id": "s88",
-    "name": "Yenul Lakmeth",
-    "category": "Junior",
-    "classDay": "Sunday",
-    "classTime": "5:00 PM",
-    "song": "You Are My Sunshine",
-    "artist": ""
-  },
-  {
-    "id": "s89",
-    "name": "Divashri Luchyshyaa",
-    "category": "Kids",
-    "classDay": "Sunday",
-    "classTime": "11:00 PM",
-    "song": "",
-    "artist": ""
-  },
-  {
-    "id": "s90",
-    "name": "Aanya Janakananda",
-    "category": "Youth",
-    "classDay": "Sunday",
-    "classTime": "3:00 AM",
-    "song": "Waka Waka",
-    "artist": "Shakira"
-  },
-  {
-    "id": "s91",
-    "name": "Evan Dias",
-    "category": "Youth",
-    "classDay": "Friday",
-    "classTime": "5:00 PM",
-    "song": "Me Rata Mage Rata",
-    "artist": ""
-  },
-  {
-    "id": "s92",
-    "name": "Aiden de Silva",
-    "category": "Kids",
-    "classDay": "Saturday",
-    "classTime": "11:30 AM",
-    "song": "Country Roads",
-    "artist": "John Denver"
-  },
-  {
-    "id": "s93",
-    "name": "Kuyana Dissanayake",
-    "category": "Youth",
-    "classDay": "Sunday",
-    "classTime": "3:00 PM",
-    "song": "Faded",
-    "artist": "Alan Walker"
-  }
+  {"id":"s78","name":"Yulia Samarasekara","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Country Roads","artist":"John Denver"},
+  {"id":"s79","name":"Aanya Shemaiah Cooray","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Me Rata Mage Rata and Rosa Male","artist":""},
+  {"id":"s80","name":"Yoana De Silva","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"You Are My Sunshine / Jamaica Farewell","artist":""},
+  {"id":"s81","name":"Evaan De Silva","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Rain Rain Go Away / Baby Shark","artist":""},
+  {"id":"s82","name":"Mikayeel Drahaman","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Anagathaye (Mashup with Atha Ran Wiman and Perfect)","artist":"WAYO / Clarence Wijewardena / Ed Sheeran"},
+  {"id":"s83","name":"Lehan Soysa","category":"Youth","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":"Christina Perri"},
+  {"id":"s84","name":"Amanda Sadali","category":"Youth","classDay":"Sunday","classTime":"5:00 PM","song":"Dreamers","artist":"Jung Kook"},
+  {"id":"s85","name":"Amasha Imandhi","category":"Kids","classDay":"Sunday","classTime":"5:00 PM","song":"Me Rata Mage Rata","artist":""},
+  {"id":"s86","name":"Senuli Wilegoda","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Top of the World","artist":"The Carpenters"},
+  {"id":"s87","name":"Dinudi Sihasna Hettiarachchi","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Top of the World","artist":"The Carpenters"},
+  {"id":"s88","name":"Yenul Lakmeth","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":""},
+  {"id":"s89","name":"Divashri Luchyshyaa","category":"Kids","classDay":"Sunday","classTime":"11:00 PM","song":"","artist":""},
+  {"id":"s90","name":"Aanya Janakananda","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Waka Waka","artist":"Shakira"},
+  {"id":"s91","name":"Evan Dias","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Me Rata Mage Rata","artist":""},
+  {"id":"s92","name":"Aiden de Silva","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Country Roads","artist":"John Denver"},
+  {"id":"s93","name":"Kuyana Dissanayake","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Faded","artist":"Alan Walker"},
+  {"id":"s94","name":"Kalubovilage Sethika Savidu Perera","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Top of the World","artist":"Karen Carpenter"},
+  {"id":"s95","name":"N.M.A.Ayon Megha Nanayakkara","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Country Roads","artist":""},
+  {"id":"s96","name":"Roman Ash Amarathunga","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Indunil gagulal","artist":"Rukantha gunathilaka"},
+  {"id":"s97","name":"Akindu Nimneth Wickramarathna","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"You Are My Sunshine","artist":""},
+  {"id":"s98","name":"Yevan Randira Yatiwella","category":"Junior","classDay":"Saturday","classTime":"11:30 AM","song":"You Are My Sunshine","artist":""},
+  {"id":"s99","name":"Giana Neshi","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Take me home, country roads","artist":"John Denver"},
+  {"id":"s100","name":"K A Yenuli Taneesha","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Waka Waka","artist":"Shakira"}
 ]
