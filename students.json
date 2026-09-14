@@ -86,5 +86,95 @@
   {"id":"s97","name":"Akindu Nimneth Wickramarathna","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"You Are My Sunshine","artist":""},
   {"id":"s98","name":"Yevan Randira Yatiwella","category":"Junior","classDay":"Saturday","classTime":"11:30 AM","song":"You Are My Sunshine","artist":""},
   {"id":"s99","name":"Giana Neshi","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Take me home, country roads","artist":"John Denver"},
-  {"id":"s100","name":"K A Yenuli Taneesha","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Waka Waka","artist":"Shakira"}
+  {"id":"s100","name":"K A Yenuli Taneesha","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Waka Waka","artist":"Shakira"},
+   {
+    "id": "s101",
+    "name": "Amodee Vithulya Ramanayake",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Wake Me Up",
+    "artist": "Avicii"
+  },
+  {
+    "id": "s102",
+    "name": "Thenul Munasinghe",
+    "category": "Kids",
+    "classDay": "Wednesday",
+    "classTime": "3:30 PM",
+    "song": "You Are My Sunshine",
+    "artist": ""
+  },
+  {
+    "id": "s103",
+    "name": "Thinuli Karunarathna",
+    "category": "Youth",
+    "classDay": "Saturday",
+    "classTime": "9:30 AM",
+    "song": "Riptide",
+    "artist": "Vance Joy"
+  },
+  {
+    "id": "s104",
+    "name": "Nivyaan Karunanayake",
+    "category": "Kids",
+    "classDay": "Sunday",
+    "classTime": "11:00 AM",
+    "song": "You Are My Sunshine",
+    "artist": ""
+  },
+  {
+    "id": "s105",
+    "name": "Kenul Devjaan Withanage",
+    "category": "Kids",
+    "classDay": "Wednesday",
+    "classTime": "3:30 PM",
+    "song": "The Lion Sleeps Tonight",
+    "artist": ""
+  },
+  {
+    "id": "s106",
+    "name": "Chenaya Premarathne",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Perfect",
+    "artist": "Ed Sheeran"
+  },
+  {
+    "id": "s107",
+    "name": "Jithuni Premarathne",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Perfect",
+    "artist": "Ed Sheeran"
+  },
+  {
+    "id": "s108",
+    "name": "Tharuki Perera",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Titanium",
+    "artist": "David Guetta ft. Sia"
+  },
+  {
+    "id": "s109",
+    "name": "Udula Abhiman Rupasinghe",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Perfect",
+    "artist": "Ed Sheeran"
+  },
+  {
+    "id": "s110",
+    "name": "Didulya Somasiri",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Grenade",
+    "artist": "Bruno Mars"
+  }
 ]
