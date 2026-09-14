@@ -288,6 +288,7 @@ h1 .wi{display:inline-block}
   border-radius:14px;overflow:hidden;box-shadow:var(--lift);text-align:left;
 }
 .fact{background:var(--card);padding:14px 15px}
+.fact:last-child{grid-column:1/-1}
 .fact dt{
   font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;
   text-transform:uppercase;color:var(--ink3);margin:0 0 5px;
@@ -302,7 +303,8 @@ h1 .wi{display:inline-block}
 }
 @media (min-width:700px){
   header{padding:60px 0 0}
-  .facts{grid-template-columns:repeat(4,1fr);margin-top:40px}
+  .facts{grid-template-columns:repeat(3,1fr);margin-top:40px}
+  .fact:last-child{grid-column:auto}
 }
 
 /* ---------- big search ---------- */
@@ -765,6 +767,61 @@ body:not(.writer) .kill{display:none}
 }
 .st-pill .dash{color:var(--ink3)}
 
+/* A locked sheet says only that it is locked. No standing, no total: the
+   collapsed row must not leak the result it is protecting. */
+.st-pill.st-shut{
+  color:var(--ink2);background:var(--sunk);border-color:var(--line2);
+  letter-spacing:.06em;
+}
+.score-tog.is-locked .st-mark{color:var(--ink3)}
+
+.sc-gate{margin:18px 0 0}
+.sc-gate-lede{margin:0 0 14px;font-size:13.5px;color:var(--ink2);line-height:1.5}
+.sc-gate-row{display:flex;gap:9px;flex-wrap:wrap}
+.keyin{
+  flex:1 1 170px;min-width:0;box-sizing:border-box;
+  font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line2);border-radius:10px;
+  padding:12px 13px;
+  transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.keyin::placeholder{color:var(--ink3);letter-spacing:.18em;text-transform:none}
+.keyin:focus{outline:none;border-color:var(--gold-2);box-shadow:var(--ring)}
+.sc-gate-row .btn{flex:0 0 auto}
+.sc-gate-err{margin:11px 0 0;font-size:12.5px;color:var(--s5t);line-height:1.45}
+.sc-gate-hint{margin:13px 0 0;font-size:12px;color:var(--ink3);line-height:1.45}
+.sc-gate-hint b{font-weight:600;color:var(--ink2)}
+
+/* the small print under an opened sheet, for a shared family device */
+.relock{
+  background:none;border:1px solid var(--line2);color:var(--ink2);
+  font-family:var(--body);font-size:13px;font-weight:500;cursor:pointer;
+  border-radius:10px;padding:11px 15px;display:inline-flex;align-items:center;
+  gap:8px;transition:border-color .2s var(--ease), color .2s var(--ease);
+}
+.relock svg{flex:none;width:16px;height:16px}
+.relock:hover{border-color:var(--ink3);color:var(--ink)}
+.relock:active{transform:scale(.97)}
+
+/* the writer-only code list */
+.codes{margin:14px 0 0;max-height:330px;overflow:auto;
+  border:1px solid var(--line);border-radius:11px}
+.codes table{width:100%;border-collapse:collapse;font-size:13px}
+.codes th,.codes td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}
+.codes thead th{
+  position:sticky;top:0;background:var(--sunk);z-index:1;
+  font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3);
+}
+.codes tbody tr:last-child th,.codes tbody tr:last-child td{border-bottom:0}
+.codes tbody th{font-weight:500;color:var(--ink);line-height:1.35}
+.codes .cd{
+  width:1%;white-space:nowrap;font-family:var(--mono);font-size:14px;
+  font-weight:500;letter-spacing:.1em;color:var(--gold-3);
+}
+.codes .ct{width:1%;white-space:nowrap;color:var(--ink3);font-size:12px}
+
 .score-tog .chev{
   flex:none;width:16px;height:16px;color:var(--ink3);
   transition:transform .26s var(--ease), color .22s var(--ease);
@@ -862,6 +919,7 @@ body:not(.writer) .kill{display:none}
   .score-tog{gap:9px;padding:15px 14px;flex-wrap:wrap}
   .st-pill{font-size:12px;padding:5px 10px}
   .score-in{padding:2px 14px 20px}
+  .sc-gate-row .btn{flex:1 1 100%}
   .sc-tbl th,.sc-tbl td{padding:10px 3px}
   .sc-tbl .max,.sc-tbl .got{width:54px}
 }
@@ -1199,7 +1257,23 @@ footer p{
      A student is one object:
        {"id":"s1","name":"...","category":"Kids|Junior|Youth",
         "classDay":"Wednesday|Thursday|Friday|Saturday|Sunday",
-        "classTime":"4:30 PM","song":"...","artist":"..."}
+        "classTime":"4:30 PM","song":"...","artist":"...","key":"A8ZCB5"}
+
+     ACCESS CODES.  "key" is the code that opens that student's score sheet.
+     Until it is typed in, the sheet on their card stays folded and says only
+     that it is locked — so one parent searching the roster cannot read
+     another child's marks. Codes use an alphabet with no 0/O and no 1/I/L,
+     and are matched loosely: case and dashes are ignored. Leave "key" out
+     and the page derives a stable one from the id, so a newly added student
+     is never the one with an open sheet. In the page, "Manage roster" ->
+     Access codes lists them all, copies them out, or prints one slip per
+     family; in the console, ShalomRoster.codes().
+
+     What this is and is not: the roster ships inside this page, codes and
+     all, so the gate stops a parent opening the wrong sheet — it does not
+     hide anything from someone who opens students.json or reads the page
+     source. Marks that must stay private from a determined reader would have
+     to be encrypted, which this page does not do.
 
      Marks are optional and all blank for now — the score sheet on a searched
      child's card shows ruled blanks until they are filled in. To publish a
@@ -1282,6 +1356,11 @@ window.ShalomRosterGen = (function(){
           classTime: pick(bk.times),
           song: pair[0],
           artist: pair[1],
+          key: (function(){
+            var k = "";
+            for(var c = 0; c < 6; c++) k += KEYCH.charAt(Math.floor(rnd() * KEYCH.length));
+            return k;
+          })(),
           sample: true
         });
       }
@@ -1296,6 +1375,20 @@ window.ShalomRosterGen = (function(){
       var k = r.classDay + " " + (/AM/.test(r.classTime) ? "AM" : "PM");
       out[k] = (out[k] || 0) + 1;
     });
+    return out;
+  }
+
+  /* The access code that opens a student's score sheet. Same alphabet the
+     page uses — no 0/O or 1/I/L, since these get read off paper and typed by
+     hand — and anything else in what was pasted is dropped, so "a8z cb5" and
+     "A8Z-CB5" are the one code. */
+  var KEYCH = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
+
+  function normkey(v){
+    var raw = String(v == null ? "" : v).toUpperCase(), out = "";
+    for(var i = 0; i < raw.length; i++){
+      if(KEYCH.indexOf(raw.charAt(i)) > -1) out += raw.charAt(i);
+    }
     return out;
   }
 
@@ -1335,13 +1428,13 @@ window.ShalomRosterGen = (function(){
           var f = line.split(sep);
           rows.push({
             name: f[0], category: f[1], classDay: f[2],
-            classTime: f[3], song: f[4], artist: f[5]
+            classTime: f[3], song: f[4], artist: f[5], key: f[6]
           });
         });
       }
     }
 
-    var seen = {}, clean = [];
+    var seen = {}, seenKey = {}, clean = [];
 
     rows.forEach(function(r, i){
       var where = "Row " + (i + 1);
@@ -1378,6 +1471,27 @@ window.ShalomRosterGen = (function(){
       };
       if(r.sessionId) row.sessionId = r.sessionId;   // manual session override
       if(r.sample) row.sample = true;
+
+      /* The sheet's access code. Kept if one was given, left off if not —
+         the page then derives a stable code from the id, so a student added
+         here is never the one with an open sheet. Two students sharing a
+         code would open each other's sheets, which is the whole thing this
+         guards against, so that is worth saying out loud. */
+      var key = normkey(r.key);
+      if(key){
+        if(key.length < 4){
+          problems.push(where + " (" + name + "): access code \"" + key +
+                        "\" is too short to be one — ignored, a code will be " +
+                        "derived from the id instead.");
+        } else if(seenKey[key]){
+          problems.push(where + " (" + name + "): access code " + key +
+                        " is already " + seenKey[key] + "’s — ignored, or " +
+                        "they would open each other’s sheets.");
+        } else {
+          seenKey[key] = name;
+          row.key = key;
+        }
+      }
 
       /* Marks, when there are any. Keys are the score-sheet criteria; a
          missing or blank value means that criterion is not judged yet. */
@@ -1417,72 +1531,72 @@ window.ShalomRosterGen = (function(){
 
 <script id="roster" type="application/json">
 [
-{"id":"s01","name":"Dinaxi Lakwindhi Abeywickrama","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Shalala Lala","artist":"Vengaboys"},
-{"id":"s02","name":"Kevinya Kinalee Jayasuriya","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Waka Waka","artist":"Shakira"},
-{"id":"s03","name":"Siluni Odara Jagoda","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Jamaica Farewell","artist":""},
-{"id":"s04","name":"Kevan Mandiv Wijewardana","category":"Kids","classDay":"Sunday","classTime":"12:30 PM","song":"If You’re Happy and You Know It","artist":""},
-{"id":"s05","name":"Nivein Bandara","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"You Are My Sunshine","artist":""},
-{"id":"s06","name":"Aken Fernando","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Aji Thapara La Li La","artist":"","note":"Category not given on the entry form — defaulted to Junior, please confirm."},
-{"id":"s07","name":"Subasinghe Arachchilage Andrina Meghan Appuhamy","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"You Are My Sunshine","artist":"Christina Perri"},
-{"id":"s08","name":"Aaliya Shenali Galanga","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Waka Waka","artist":""},
-{"id":"s09","name":"Anya Yehali Galanga","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Dil Hai Ke Manta Nahin","artist":""},
-{"id":"s10","name":"Savidu Sulakshana Galgamuwa","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"Three Little Birds","artist":""},
-{"id":"s11","name":"Thinuli Monara Withanachchi","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":""},
-{"id":"s12","name":"Savindya Dulshani Galgamuwa","category":"Kids","classDay":"Sunday","classTime":"5:00 PM","song":"If You Are Happy and You Know It","artist":""},
-{"id":"s13","name":"Danith Damsilu Karunarathne","category":"Kids","classDay":"Sunday","classTime":"12:30 PM","song":"Top of the World","artist":"Karen Carpenter"},
-{"id":"s14","name":"R.A. Vethmi Vohara Ranasinghe","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Top of the World","artist":"Karen Carpenter / The Carpenters"},
-{"id":"s15","name":"Lavisha Piyavi Wijewardene","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":""},
-{"id":"s16","name":"M. Iveth Vindiya Perera","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Dreamers","artist":"Jung Kook"},
-{"id":"s17","name":"Dhanodya Dewdeesha","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Una Paloma Blanca","artist":""},
-{"id":"s18","name":"Venudhya Gawdeesha","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"In the Jungle","artist":""},
-{"id":"s19","name":"Thisala Kirana Perera","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Heal the World","artist":""},
-{"id":"s20","name":"Useli Iduthara Perera","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Un Poco Loco","artist":""},
-{"id":"s21","name":"Sanuji Yethumsa","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Una Paloma Blanca","artist":""},
-{"id":"s22","name":"Thidew Aash","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Aju Thapara Lahila","artist":""},
-{"id":"s23","name":"Thinuli Dahamsa","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Un Poco Loco","artist":""},
-{"id":"s24","name":"Haveesh Thevsas Karunathilake","category":"Junior","classDay":"Saturday","classTime":"5:00 PM","song":"Waka Waka","artist":"Shakira"},
-{"id":"s25","name":"Ivein Githnuka","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Take Me Home, Country Roads","artist":"John Denver"},
-{"id":"s26","name":"Romain Krishal Perera","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Down the Way","artist":""},
-{"id":"s27","name":"E.M. Nimradha Senvath","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Heal the World","artist":""},
-{"id":"s28","name":"P. Devthini Chathnara","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Waka Waka","artist":"Shakira"},
-{"id":"s29","name":"Eshan Bryan Handagama","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Waka Waka","artist":"Shakira"},
-{"id":"s30","name":"Yashmika Kumarathunga","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Me Vedikawa","artist":"Athula Adikari"},
-{"id":"s31","name":"Akiv Nadesan","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Five Little Speckled Frogs","artist":""},
-{"id":"s32","name":"Thinuki Abeyasinghe","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Aju Thapara Lahila","artist":"","sessionId":"oct2","note":"Saturday 4:30 PM class — parent asked for the Friday session instead."},
-{"id":"s33","name":"Dimeth Abeygooneratne","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Solo: Top of the World / Group: You Are My Sunshine","artist":""},
-{"id":"s34","name":"Sethuni Dulara Jagoda","category":"Junior","classDay":"Saturday","classTime":"9:30 AM","song":"You Are My Sunshine","artist":""},
-{"id":"s35","name":"Chathusari Ruhunage","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Rewrite the Stars","artist":"Anne-Marie & James Arthur"},
-{"id":"s36","name":"Mineki Ayana","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Rain Rain Go Away","artist":""},
-{"id":"s37","name":"Lesandi Thivainya De Alwis","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Jamaica Farewell","artist":"Harry Belafonte"},
-{"id":"s38","name":"Nuvee Aanya Dharmasiri","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"Waka Waka","artist":"Shakira"},
-{"id":"s39","name":"Nethali Jayasinghe","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Baby Shark","artist":""},
-{"id":"s40","name":"Lohas Jayasinghe","category":"Junior","classDay":"Saturday","classTime":"9:30 AM","song":"Give Me Some Sunshine","artist":""},
-{"id":"s41","name":"Methuki Jayasinghe","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Un Poco Loco","artist":""},
-{"id":"s42","name":"Dilna Zahra","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Viva La Vida","artist":"Coldplay"},
-{"id":"s43","name":"Amindri Olupeliyawa","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Dreamers","artist":"Jung Kook"},
-{"id":"s44","name":"Avindri Olupeliyawa","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Pretty Little Baby","artist":"Connie Francis"},
-{"id":"s45","name":"P.L. Methuki Siyansa","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Waka Waka","artist":"Shakira"},
-{"id":"s46","name":"P.L. Sanuthi Omansa","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Three Little Birds","artist":""},
-{"id":"s47","name":"Aryan Ranasinghe","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":""},
-{"id":"s48","name":"Dinol Tharulka","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Top of the World","artist":"The Carpenters"},
-{"id":"s49","name":"Methupama Leyon Attanayake","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Brown Girl in the Ring","artist":"Boney M"},
-{"id":"s50","name":"Nesandi Senalya Nanayakkara","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":""},
-{"id":"s51","name":"Kayli Weeraratne","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Earth Song","artist":"Michael Jackson"},
-{"id":"s52","name":"Masith Kandearachchi","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Un Poco Loco","artist":"Coco"},
-{"id":"s53","name":"Damiru Ransithu Piyadigama","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Hotel California","artist":"The Eagles"},
-{"id":"s54","name":"K. N. Kenuka","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Mash-up: Un Poco Loco – Coco, Me Wedikawa – Athula Adikari, Rivers of Babylon – Steve Earle","artist":""},
-{"id":"s55","name":"Himandee Malinima","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"At My Worst","artist":"feat. Kehlani"},
-{"id":"s56","name":"Himath Mandinu","category":"Kids","classDay":"Sunday","classTime":"3:00 PM","song":"You Are My Sunshine","artist":""},
-{"id":"s57","name":"Ethan Levon","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Don’t Worry","artist":"Bob Marley"},
-{"id":"s65","name":"Aken De Costa","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"In the Jungle","artist":""},
-{"id":"s66","name":"Teshini Samarasekara","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Me Wedikawa Jeewithe Ape","artist":""},
-{"id":"s68","name":"Viha Dhanashi","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"You Are My Sunshine","artist":"Christina Perri"},
-{"id":"s69","name":"Adithi Rajapakse","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"","artist":"","note":"Song still to be chosen — shows as a dash on her card until it is set."},
-{"id":"s71","name":"W.D. Shayeli Aadya Kahawita","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Believer","artist":"Imagine Dragons"},
-{"id":"s74","name":"Adeesha Thehan Weliwatta","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Country Roads (Forever Country)","artist":""},
-{"id":"s75","name":"Theviru Sejan Jayasundara Kumarasiri","category":"Kids","classDay":"Sunday","classTime":"12:30 PM","song":"Rain Rain Go Away","artist":""},
-{"id":"s77","name":"Reshawn Vanhoff","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Indunil Gangulal","artist":"Rukantha Gunathilake"},
-{"id":"s78","name":"Yulia Samarasekara","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Country Roads","artist":"John Denver"}
+{"id":"s01","name":"Dinaxi Lakwindhi Abeywickrama","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Shalala Lala","artist":"Vengaboys","key":"A8ZCB5"},
+{"id":"s02","name":"Kevinya Kinalee Jayasuriya","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Waka Waka","artist":"Shakira","key":"RWD67S"},
+{"id":"s03","name":"Siluni Odara Jagoda","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Jamaica Farewell","artist":"","key":"R297YY"},
+{"id":"s04","name":"Kevan Mandiv Wijewardana","category":"Kids","classDay":"Sunday","classTime":"12:30 PM","song":"If You’re Happy and You Know It","artist":"","key":"342W4E"},
+{"id":"s05","name":"Nivein Bandara","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"You Are My Sunshine","artist":"","key":"MJ8JPE"},
+{"id":"s06","name":"Aken Fernando","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Aji Thapara La Li La","artist":"","note":"Category not given on the entry form — defaulted to Junior, please confirm.","key":"JE4SPK"},
+{"id":"s07","name":"Subasinghe Arachchilage Andrina Meghan Appuhamy","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"You Are My Sunshine","artist":"Christina Perri","key":"FCE4Z9"},
+{"id":"s08","name":"Aaliya Shenali Galanga","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Waka Waka","artist":"","key":"ZBWFRE"},
+{"id":"s09","name":"Anya Yehali Galanga","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Dil Hai Ke Manta Nahin","artist":"","key":"AGNTC8"},
+{"id":"s10","name":"Savidu Sulakshana Galgamuwa","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"Three Little Birds","artist":"","key":"X669V6"},
+{"id":"s11","name":"Thinuli Monara Withanachchi","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":"","key":"4E87K8"},
+{"id":"s12","name":"Savindya Dulshani Galgamuwa","category":"Kids","classDay":"Sunday","classTime":"5:00 PM","song":"If You Are Happy and You Know It","artist":"","key":"T6NQ45"},
+{"id":"s13","name":"Danith Damsilu Karunarathne","category":"Kids","classDay":"Sunday","classTime":"12:30 PM","song":"Top of the World","artist":"Karen Carpenter","key":"BURDNB"},
+{"id":"s14","name":"R.A. Vethmi Vohara Ranasinghe","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Top of the World","artist":"Karen Carpenter / The Carpenters","key":"JAF5J9"},
+{"id":"s15","name":"Lavisha Piyavi Wijewardene","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":"","key":"X64P9T"},
+{"id":"s16","name":"M. Iveth Vindiya Perera","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Dreamers","artist":"Jung Kook","key":"PEUB6C"},
+{"id":"s17","name":"Dhanodya Dewdeesha","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Una Paloma Blanca","artist":"","key":"F7PT5J"},
+{"id":"s18","name":"Venudhya Gawdeesha","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"In the Jungle","artist":"","key":"EDS7QE"},
+{"id":"s19","name":"Thisala Kirana Perera","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Heal the World","artist":"","key":"K3EXK3"},
+{"id":"s20","name":"Useli Iduthara Perera","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Un Poco Loco","artist":"","key":"8GBW5Y"},
+{"id":"s21","name":"Sanuji Yethumsa","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Una Paloma Blanca","artist":"","key":"ZREM5F"},
+{"id":"s22","name":"Thidew Aash","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Aju Thapara Lahila","artist":"","key":"KNW6PQ"},
+{"id":"s23","name":"Thinuli Dahamsa","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Un Poco Loco","artist":"","key":"5RQQQZ"},
+{"id":"s24","name":"Haveesh Thevsas Karunathilake","category":"Junior","classDay":"Saturday","classTime":"5:00 PM","song":"Waka Waka","artist":"Shakira","key":"KCJYTK"},
+{"id":"s25","name":"Ivein Githnuka","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Take Me Home, Country Roads","artist":"John Denver","key":"KCFHDX"},
+{"id":"s26","name":"Romain Krishal Perera","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Down the Way","artist":"","key":"TS9XMS"},
+{"id":"s27","name":"E.M. Nimradha Senvath","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Heal the World","artist":"","key":"2U3PWH"},
+{"id":"s28","name":"P. Devthini Chathnara","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Waka Waka","artist":"Shakira","key":"HR8X5Q"},
+{"id":"s29","name":"Eshan Bryan Handagama","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Waka Waka","artist":"Shakira","key":"GRP4RT"},
+{"id":"s30","name":"Yashmika Kumarathunga","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Me Vedikawa","artist":"Athula Adikari","key":"UV7EVY"},
+{"id":"s31","name":"Akiv Nadesan","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Five Little Speckled Frogs","artist":"","key":"KQJ4JK"},
+{"id":"s32","name":"Thinuki Abeyasinghe","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Aju Thapara Lahila","artist":"","note":"Saturday 4:30 PM class — parent asked for the Friday session instead.","sessionId":"oct2","key":"4BN9PD"},
+{"id":"s33","name":"Dimeth Abeygooneratne","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Solo: Top of the World / Group: You Are My Sunshine","artist":"","key":"ZBGA7B"},
+{"id":"s34","name":"Sethuni Dulara Jagoda","category":"Junior","classDay":"Saturday","classTime":"9:30 AM","song":"You Are My Sunshine","artist":"","key":"S5CUET"},
+{"id":"s35","name":"Chathusari Ruhunage","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Rewrite the Stars","artist":"Anne-Marie & James Arthur","key":"32U4M8"},
+{"id":"s36","name":"Mineki Ayana","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Rain Rain Go Away","artist":"","key":"REMKDA"},
+{"id":"s37","name":"Lesandi Thivainya De Alwis","category":"Youth","classDay":"Thursday","classTime":"3:30 PM","song":"Jamaica Farewell","artist":"Harry Belafonte","key":"GHJ2C7"},
+{"id":"s38","name":"Nuvee Aanya Dharmasiri","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"Waka Waka","artist":"Shakira","key":"D86DE2"},
+{"id":"s39","name":"Nethali Jayasinghe","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Baby Shark","artist":"","key":"G8D2E8"},
+{"id":"s40","name":"Lohas Jayasinghe","category":"Junior","classDay":"Saturday","classTime":"9:30 AM","song":"Give Me Some Sunshine","artist":"","key":"EYA3MX"},
+{"id":"s41","name":"Methuki Jayasinghe","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Un Poco Loco","artist":"","key":"2WUGMQ"},
+{"id":"s42","name":"Dilna Zahra","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Viva La Vida","artist":"Coldplay","key":"MJ2XT7"},
+{"id":"s43","name":"Amindri Olupeliyawa","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Dreamers","artist":"Jung Kook","key":"QJQCBC"},
+{"id":"s44","name":"Avindri Olupeliyawa","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Pretty Little Baby","artist":"Connie Francis","key":"9H9UPB"},
+{"id":"s45","name":"P.L. Methuki Siyansa","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Waka Waka","artist":"Shakira","key":"DU6UMD"},
+{"id":"s46","name":"P.L. Sanuthi Omansa","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Three Little Birds","artist":"","key":"34YQCV"},
+{"id":"s47","name":"Aryan Ranasinghe","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":"","key":"YVDSUT"},
+{"id":"s48","name":"Dinol Tharulka","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Top of the World","artist":"The Carpenters","key":"6BKYM7"},
+{"id":"s49","name":"Methupama Leyon Attanayake","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Brown Girl in the Ring","artist":"Boney M","key":"E6HYAK"},
+{"id":"s50","name":"Nesandi Senalya Nanayakkara","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":"","key":"UHE3AP"},
+{"id":"s51","name":"Kayli Weeraratne","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Earth Song","artist":"Michael Jackson","key":"93XUXM"},
+{"id":"s52","name":"Masith Kandearachchi","category":"Junior","classDay":"Saturday","classTime":"4:30 PM","song":"Un Poco Loco","artist":"Coco","key":"5ZXVJB"},
+{"id":"s53","name":"Damiru Ransithu Piyadigama","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Hotel California","artist":"The Eagles","key":"AW2HQ5"},
+{"id":"s54","name":"K. N. Kenuka","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Mash-up: Un Poco Loco – Coco, Me Wedikawa – Athula Adikari, Rivers of Babylon – Steve Earle","artist":"","key":"KJQV6K"},
+{"id":"s55","name":"Himandee Malinima","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"At My Worst","artist":"feat. Kehlani","key":"DT2XSN"},
+{"id":"s56","name":"Himath Mandinu","category":"Kids","classDay":"Sunday","classTime":"3:00 PM","song":"You Are My Sunshine","artist":"","key":"394XM3"},
+{"id":"s57","name":"Ethan Levon","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Don’t Worry","artist":"Bob Marley","key":"BQVUFS"},
+{"id":"s65","name":"Aken De Costa","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"In the Jungle","artist":"","key":"7B49EX"},
+{"id":"s66","name":"Teshini Samarasekara","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Me Wedikawa Jeewithe Ape","artist":"","key":"MGVUGZ"},
+{"id":"s68","name":"Viha Dhanashi","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"You Are My Sunshine","artist":"Christina Perri","key":"XVBXK8"},
+{"id":"s69","name":"Adithi Rajapakse","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"","artist":"","note":"Song still to be chosen — shows as a dash on her card until it is set.","key":"QFNXZM"},
+{"id":"s71","name":"W.D. Shayeli Aadya Kahawita","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Believer","artist":"Imagine Dragons","key":"6KG6V5"},
+{"id":"s74","name":"Adeesha Thehan Weliwatta","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Country Roads (Forever Country)","artist":"","key":"EKXARV"},
+{"id":"s75","name":"Theviru Sejan Jayasundara Kumarasiri","category":"Kids","classDay":"Sunday","classTime":"12:30 PM","song":"Rain Rain Go Away","artist":"","key":"9CF43P"},
+{"id":"s77","name":"Reshawn Vanhoff","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Indunil Gangulal","artist":"Rukantha Gunathilake","key":"R59ZQA"},
+{"id":"s78","name":"Yulia Samarasekara","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Country Roads","artist":"John Denver","key":"QM7TM6"}
 ]
 </script>
 
@@ -1526,7 +1640,6 @@ window.ShalomRosterGen = (function(){
 
     <dl class="facts">
       <div class="fact"><dt>Dates</dt><dd>Oct 1&ndash;4, 2026</dd></div>
-      <div class="fact"><dt>Participants</dt><dd><span class="big goldtext" data-render="count">0</span></dd></div>
       <div class="fact"><dt>Sessions</dt><dd><span class="big goldtext">6</span></dd></div>
       <div class="fact"><dt>Venue</dt><dd>In-house class premises</dd></div>
     </dl>
@@ -1628,6 +1741,23 @@ window.ShalomRosterGen = (function(){
       <p class="say" id="say"></p>
 
       <div class="sub">
+        <h3>Access codes</h3>
+        <p class="hint">
+          Every score sheet stays folded until that child&rsquo;s code is typed in,
+          so one family cannot read another&rsquo;s marks. Give each code to that
+          family only. A student added without a code gets a stable one worked
+          out from their id, so nobody&rsquo;s sheet is ever left open.
+        </p>
+        <div class="acts wrapacts">
+          <button class="btn go" id="codes" type="button">Show all codes</button>
+          <button class="btn off" id="codes-copy" type="button">Copy list</button>
+          <button class="btn off" id="codes-print" type="button">Print slips</button>
+        </div>
+        <div class="codes" id="codelist" hidden></div>
+        <p class="say" id="say3"></p>
+      </div>
+
+      <div class="sub">
         <h3>Replace the whole roster</h3>
         <p class="hint">
           For next year&rsquo;s students, or when the real list arrives. Paste JSON,
@@ -1721,6 +1851,88 @@ window.ShalomRosterGen = (function(){
     '<path d="M6.7 10.4V1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
 
   var GLYPHS = [EIGHTH, BEAMED, QUARTER];
+
+  /* ---------- access codes ----------
+     One parent searching the roster should not be able to read another
+     child's marks, so every score sheet is folded behind a short code that
+     only that family is given. The code rides on the roster row as
+     "key":"A8ZCB5"  and is compared loosely: case and punctuation are
+     ignored, so 8zc-b5a typed on a phone still opens the sheet.
+
+     Be clear about what this is. The roster — codes included — is part of
+     this page, so it stops a parent wandering into the wrong sheet; it does
+     not hide anything from someone who opens students.json or reads the
+     page source. For marks that must stay private from a determined reader,
+     they would have to be encrypted, not merely folded away. */
+
+  /* No 0/O, 1/I/L: a code gets read off a slip and typed by hand. */
+  var KEY_ALPHA = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
+  var KEY_LEN = 6;
+
+  function normKey(v){
+    var raw = String(v == null ? "" : v).toUpperCase(), out = "";
+    for(var i = 0; i < raw.length; i++){
+      if(KEY_ALPHA.indexOf(raw.charAt(i)) > -1) out += raw.charAt(i);
+    }
+    return out;
+  }
+
+  function prettyKey(v){
+    var k = normKey(v);
+    return k.length === KEY_LEN ? k.slice(0, 3) + "-" + k.slice(3) : k;
+  }
+
+  /* A row that arrives with no code still needs one, or its sheet would be
+     the only one on the page left hanging open. Derive it from the id, so the
+     same student gets the same code on every copy of this file and every
+     reload — and so a student added through "Manage roster" is gated the
+     moment they appear, before anyone thinks to mint them a code. */
+  function derivedKey(id){
+    var src = "shalom/2026/" + String(id == null ? "" : id);
+    var h1 = 0x811c9dc5, h2 = 0x1000193, out = "";
+    for(var i = 0; i < src.length; i++){
+      h1 = ((h1 ^ src.charCodeAt(i)) * 16777619) >>> 0;
+      h2 = ((h2 + src.charCodeAt(i) * (i + 7)) * 2246822519) >>> 0;
+    }
+    for(var j = 0; j < KEY_LEN; j++){
+      out += KEY_ALPHA.charAt(((j % 2 ? h1 : h2) >>> 9) % KEY_ALPHA.length);
+      h1 = (h1 * 31 + 7) >>> 0;
+      h2 = (h2 * 37 + 11) >>> 0;
+    }
+    return out;
+  }
+
+  function keyFor(r){
+    var k = normKey(r && r.key);
+    return k.length >= 4 ? k : derivedKey(r ? r.id : "");
+  }
+
+  /* Whoever holds writer access is the academy, and reads every sheet
+     without typing anything. */
+  function isWriter(){ return document.body.classList.contains("writer"); }
+
+  /* Which sheets this browser has been given the code for. Session storage,
+     not local: on a shared family laptop or a phone passed round after the
+     concert, an unlock should not outlive the tab. Storage can be missing or
+     walled off (private windows), and a forgotten code is a small cost, so
+     every read and write here shrugs off failure. */
+  var UNLOCKED_AT = "shalom.sheets.unlocked";
+  var unlocked = (function(){
+    try {
+      var raw = window.sessionStorage.getItem(UNLOCKED_AT);
+      var list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch(e){ return []; }
+  })();
+
+  function rememberUnlocked(){
+    try { window.sessionStorage.setItem(UNLOCKED_AT, JSON.stringify(unlocked)); }
+    catch(e){}
+  }
+
+  function isUnlocked(r){
+    return isWriter() || unlocked.indexOf(String(r.id)) > -1;
+  }
 
   /* ---------- the official score sheet ---------- */
 
@@ -1897,6 +2109,19 @@ window.ShalomRosterGen = (function(){
     return isFinite(v) ? v : null;
   }
 
+  var CHEV = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ' +
+    'aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+  var PADLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="4" y="10.5" width="16" height="11" rx="2.4"/>' +
+    '<path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>';
+
+  function sheetDomId(r){
+    return "sc-" + String(r.id).replace(/[^A-Za-z0-9_-]/g, "");
+  }
+
   /* a mark nobody has written yet — a ruled blank, as on the paper sheet */
   var BLANK = '<span class="hold" aria-hidden="true"></span>' +
               '<span class="vis-hide">not scored yet</span>';
@@ -1915,7 +2140,54 @@ window.ShalomRosterGen = (function(){
      yet, so every mark here is deliberately blank: a parent should see the
      sheet their child is measured against, not a column of zeroes that
      reads like a bad result. Fill  scores  in and the same rows light up. */
+  /* The sheet has two faces and the card only ever holds one of them: the
+     gate, or the marks. Rendering the marks and hiding them with CSS would
+     put them one devtools click away, which is not what a locked sheet
+     should mean. */
   function scoreHtml(r){
+    return '<div class="score" data-sheet="' + esc(r.id) + '">' +
+      sheetFace(r) + "</div>";
+  }
+
+  function sheetFace(r){
+    return isUnlocked(r) ? sheetOpenHtml(r) : sheetLockedHtml(r);
+  }
+
+  /* The locked face. It names the child and says what is behind the fold,
+     and nothing else — no standing, no total, no adjudicator. */
+  function sheetLockedHtml(r){
+    var id = sheetDomId(r);
+    var first = esc(String(r.name).split(" ")[0]);
+
+    return '<button class="score-tog is-locked" type="button" aria-expanded="false" ' +
+        'aria-controls="' + id + '">' +
+        '<span class="st-mark" aria-hidden="true">' + PADLOCK + "</span>" +
+        '<span class="st-txt"><b>Score sheet</b><small>Private &mdash; opens with ' +
+          first + "&rsquo;s access code</small></span>" +
+        '<span class="st-pill st-shut">Locked</span>' +
+        CHEV +
+      "</button>" +
+
+      '<div class="score-body" id="' + id + '" hidden><div class="score-in">' +
+        '<form class="sc-gate" data-gate="' + esc(r.id) + '" autocomplete="off">' +
+          '<p class="sc-gate-lede">' + first + "&rsquo;s marks and the " +
+            "adjudicator&rsquo;s notes are for " + first + "&rsquo;s family. Enter the " +
+            "six-character access code from their registration slip.</p>" +
+          '<div class="sc-gate-row">' +
+            '<label class="vis-hide" for="' + id + '-key">Access code</label>' +
+            '<input class="keyin" id="' + id + '-key" type="text" maxlength="9" ' +
+              'placeholder="XXX-XXX" spellcheck="false" autocomplete="off" ' +
+              'autocapitalize="characters" autocorrect="off">' +
+            '<button class="btn go" type="submit">Unlock sheet</button>' +
+          "</div>" +
+          '<p class="sc-gate-err" role="alert" hidden></p>' +
+          '<p class="sc-gate-hint">Lost the code? Message the academy on ' +
+            "<b>0706 333 778</b> and we will send it again.</p>" +
+        "</form>" +
+      "</div></div>";
+  }
+
+  function sheetOpenHtml(r){
     var s = sessionById(assign(r));
     var rows = "", scored = 0, sum = 0;
 
@@ -1940,18 +2212,15 @@ window.ShalomRosterGen = (function(){
       : '<span aria-hidden="true"><span class="dash">&mdash;</span> / ' +
           SCORE_MAX + "</span>" +
         '<span class="vis-hide">No total yet, out of ' + SCORE_MAX + "</span>";
-    var id = "sc-" + String(r.id).replace(/[^A-Za-z0-9_-]/g, "");
+    var id = sheetDomId(r);
 
-    return '<div class="score">' +
-      '<button class="score-tog" type="button" aria-expanded="false" ' +
+    return '<button class="score-tog" type="button" aria-expanded="false" ' +
         'aria-controls="' + id + '">' +
         '<span class="st-mark" aria-hidden="true">' + QUARTER + "</span>" +
         '<span class="st-txt"><b>Score sheet</b><small>' + esc(stand) +
           "</small></span>" +
         '<span class="st-pill">' + pill + "</span>" +
-        '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-          'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" ' +
-          'aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' +
+        CHEV +
       "</button>" +
 
       '<div class="score-acts">' +
@@ -1962,6 +2231,9 @@ window.ShalomRosterGen = (function(){
             '<rect x="3" y="9" width="18" height="7" rx="2"/>' +
             '<path d="M6 16h12v5H6z"/></svg>' +
           "Print / Save as PDF</button>" +
+        (isWriter() ? "" :
+          '<button class="relock" type="button" data-relock="' + esc(r.id) + '">' +
+            PADLOCK + "Lock again</button>") +
       "</div>" +
 
       '<div class="score-body" id="' + id + '" hidden>' +
@@ -2011,8 +2283,7 @@ window.ShalomRosterGen = (function(){
               "is finished.</p>" +
             "</div>") +
         "</div>" +
-      "</div>" +
-    "</div>";
+      "</div>";
   }
 
   /* fold the sheet open and shut */
@@ -2037,6 +2308,111 @@ window.ShalomRosterGen = (function(){
       G.from(body, {height:0, opacity:0, duration:.4, ease:"power3.out",
         clearProps:"height,opacity"});
     }
+  }
+
+  /* ---------- working the gate ---------- */
+
+  /* The card the given student's sheet lives in, if it is on screen. Matched
+     by reading the attribute rather than by selector, since an id from a
+     pasted roster can hold anything. */
+  function sheetBox(r){
+    var boxes = all(".score[data-sheet]");
+    for(var i = 0; i < boxes.length; i++){
+      if(boxes[i].getAttribute("data-sheet") === String(r.id)) return boxes[i];
+    }
+    return null;
+  }
+
+  /* Swap one card's face in place. A full render() would fold the card shut
+     and jump the page back up, and the parent is reading this card right now. */
+  function swapFace(r, thenOpen){
+    var box = sheetBox(r);
+    if(!box){ render({}); return; }
+
+    box.innerHTML = sheetFace(r);
+    wireSheet(box);
+
+    var tog = box.querySelector(".score-tog");
+    if(tog && thenOpen) toggleScore(tog);        // it renders shut; fold it open
+    if(tog && !thenOpen) tog.focus();
+  }
+
+  function gateFailed(form, msg){
+    var err = form.querySelector(".sc-gate-err");
+    var input = form.querySelector(".keyin");
+    if(err){ err.textContent = msg; err.hidden = false; }
+    if(input){ input.focus(); input.select(); }
+    if(G && input) G.fromTo(input, {x:-7}, {x:0, duration:.5, ease:"elastic.out(1.4,.35)", clearProps:"x"});
+  }
+
+  function tryUnlock(form){
+    var r = rowById(form.getAttribute("data-gate"));
+    if(!r) return;
+    var input = form.querySelector(".keyin");
+    var typed = normKey(input ? input.value : "");
+    var first = String(r.name).split(" ")[0];
+
+    if(!typed){
+      gateFailed(form, "Type the access code to open the sheet.");
+      return;
+    }
+    if(typed !== keyFor(r)){
+      gateFailed(form, "That code does not match " + first + "’s sheet. " +
+                       "Check the slip — it is six characters, like " +
+                       "K4M-7PQ — and try again.");
+      return;
+    }
+
+    if(unlocked.indexOf(String(r.id)) === -1){
+      unlocked.push(String(r.id));
+      rememberUnlocked();
+    }
+    swapFace(r, true);
+  }
+
+  function relock(r){
+    var id = String(r.id);
+    unlocked = unlocked.filter(function(x){ return x !== id; });
+    rememberUnlocked();
+    swapFace(r, false);
+  }
+
+  /* Every button inside one card, or inside the whole schedule after a
+     render. Called on both paths so an unlocked card behaves like a rendered
+     one. */
+  function wireSheet(root){
+    Array.prototype.forEach.call(root.querySelectorAll(".score-tog"), function(b){
+      b.addEventListener("click", function(){ toggleScore(b); });
+    });
+
+    Array.prototype.forEach.call(root.querySelectorAll("[data-print]"), function(b){
+      b.addEventListener("click", function(){
+        var r = rowById(b.getAttribute("data-print"));
+        if(r) printSheet(r);
+      });
+    });
+
+    Array.prototype.forEach.call(root.querySelectorAll("[data-relock]"), function(b){
+      b.addEventListener("click", function(){
+        var r = rowById(b.getAttribute("data-relock"));
+        if(r) relock(r);
+      });
+    });
+
+    Array.prototype.forEach.call(root.querySelectorAll(".sc-gate"), function(f){
+      f.addEventListener("submit", function(ev){
+        ev.preventDefault();
+        tryUnlock(f);
+      });
+      var input = f.querySelector(".keyin");
+      if(input){
+        /* Clear the complaint as soon as they start fixing it. */
+        input.addEventListener("input", function(){
+          var err = f.querySelector(".sc-gate-err");
+          if(err && !err.hidden){ err.hidden = true; err.textContent = ""; }
+        });
+      }
+    });
   }
 
   /* ---------- taking the sheet away ----------
@@ -2227,7 +2603,6 @@ window.ShalomRosterGen = (function(){
       wipe.textContent = "Clear " + samples + " sample entries";
     }
 
-    slot("count").textContent = state.length;
     syncBar();
 
     var sched = slot("sched");
@@ -2312,16 +2687,7 @@ window.ShalomRosterGen = (function(){
       });
     });
 
-    Array.prototype.forEach.call(all(".score-tog"), function(b){
-      b.addEventListener("click", function(){ toggleScore(b); });
-    });
-
-    Array.prototype.forEach.call(all("[data-print]"), function(b){
-      b.addEventListener("click", function(){
-        var r = rowById(b.getAttribute("data-print"));
-        if(r) printSheet(r);
-      });
-    });
+    wireSheet(sched);
 
     if(G && booted && opts.animate){
       var tl = G.timeline({defaults:{ease:"power3.out"}});
@@ -2545,13 +2911,6 @@ window.ShalomRosterGen = (function(){
                     clearProps:"all"}, "-=.25")
       .from(".tmpl dd", {scaleX:0, duration:.4, stagger:.07,
                     transformOrigin:"left center", clearProps:"all"}, "-=.5");
-
-    var el = slot("count"), target = state.length, o = {v:0};
-    if(el && target > 0){
-      tl.to(o, {v:target, duration:1, ease:"power2.out",
-        onUpdate:function(){ el.textContent = Math.round(o.v); },
-        onComplete:function(){ el.textContent = target; }}, .4);
-    }
   }
 
   /* ---------- publishing ---------- */
@@ -2567,7 +2926,7 @@ window.ShalomRosterGen = (function(){
       el.removeAttribute("style");
     });
     Array.prototype.forEach.call(root.querySelectorAll("[data-render]"), function(el){
-      el.innerHTML = el.getAttribute("data-render") === "count" ? "0" : "";
+      el.innerHTML = "";
     });
     Array.prototype.forEach.call(root.querySelectorAll("input"), function(el){
       el.removeAttribute("value");
@@ -2582,6 +2941,15 @@ window.ShalomRosterGen = (function(){
     root.querySelector("#admin").setAttribute("hidden", "");
     root.querySelector("#say").textContent = "";
     root.querySelector("#say2").textContent = "";
+    root.querySelector("#say3").textContent = "";
+
+    /* The code list is writer-only working material. If it happened to be on
+       screen when this was published it would be baked into the page every
+       parent can read, which is the one thing the codes exist to prevent. */
+    var cl = root.querySelector("#codelist");
+    if(cl){ cl.innerHTML = ""; cl.setAttribute("hidden", ""); }
+    var cb = root.querySelector("#codes");
+    if(cb) cb.textContent = "Show all codes";
     root.querySelector("#f-bulk").textContent = "";
     root.querySelector(".finder").classList.remove("stuck");
     root.querySelector(".finder").classList.remove("has-sugg");
@@ -2909,6 +3277,129 @@ window.ShalomRosterGen = (function(){
   });
   $("#cancel").addEventListener("click", function(){ $("#panel").hidden = true; });
 
+  /* ---------- handing the codes out ----------
+     A code is no use sitting in the file. Sorted by name, because that is how
+     you look someone up when a parent is standing in front of you. */
+
+  function codeRows(){
+    return state.slice().sort(function(a, b){
+      return String(a.name).localeCompare(String(b.name));
+    });
+  }
+
+  $("#codes").addEventListener("click", function(){
+    var box = $("#codelist"), rows = codeRows();
+    if(!box.hidden){
+      box.hidden = true; box.innerHTML = "";
+      $("#codes").textContent = "Show all codes";
+      tell($("#say3"), "", "");
+      return;
+    }
+    if(!rows.length){ tell($("#say3"), "bad", "Nobody on the roster yet."); return; }
+
+    box.innerHTML = "<table><thead><tr><th>Student</th><th class='ct'>Category</th>" +
+      "<th class='cd'>Code</th></tr></thead><tbody>" +
+      rows.map(function(r){
+        return "<tr><th scope='row'>" + esc(r.name) + "</th>" +
+          "<td class='ct'>" + esc(r.category) + "</td>" +
+          "<td class='cd'>" + esc(prettyKey(keyFor(r))) + "</td></tr>";
+      }).join("") + "</tbody></table>";
+    box.hidden = false;
+    $("#codes").textContent = "Hide codes";
+    tell($("#say3"), "", rows.length + " codes. Each one opens only that child’s sheet.");
+  });
+
+  $("#codes-copy").addEventListener("click", function(){
+    var rows = codeRows();
+    if(!rows.length){ tell($("#say3"), "bad", "Nobody on the roster yet."); return; }
+
+    var text = "Student\tCategory\tSession\tAccess code\n" +
+      rows.map(function(r){
+        var s = sessionById(assign(r));
+        return [r.name, r.category, s ? s.dow + " " + s.date + " " + s.time : "",
+                prettyKey(keyFor(r))].join("\t");
+      }).join("\n");
+
+    function fallback(){
+      /* No clipboard permission, or an insecure origin: drop it in the bulk
+         box, which is already a textarea sitting right there. */
+      var ta = $("#f-bulk");
+      if(ta){ ta.value = text; ta.focus(); ta.select(); }
+      tell($("#say3"), "", "Clipboard is blocked here — the list is in the box " +
+                           "below instead, ready to copy out.");
+    }
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        tell($("#say3"), "good", rows.length + " codes copied — paste into a sheet " +
+                                 "or a mail merge.");
+      })["catch"](fallback);
+    } else { fallback(); }
+  });
+
+  /* One slip per child, cut-up-and-hand-out sized. Same trick as the score
+     sheet: a plain document with its own styles and no scripts. */
+  var SLIP_CSS = [
+    "*{box-sizing:border-box}",
+    "body{margin:0;padding:12mm;background:#fff;color:#191d1c;",
+      "font:13px/1.5 ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}",
+    "h1{font:600 17px/1.3 Georgia,'Times New Roman',serif;margin:0 0 2mm}",
+    "p.lede{margin:0 0 7mm;font-size:11.5px;color:#4a524f}",
+    ".wrap{display:grid;grid-template-columns:1fr 1fr;gap:5mm}",
+    ".slip{border:1px dashed #c0902e;border-radius:3mm;padding:5mm;",
+      "break-inside:avoid;page-break-inside:avoid}",
+    ".slip .ac{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;",
+      "color:#82591a;margin:0 0 2mm}",
+    ".slip h2{font:600 15px/1.25 Georgia,'Times New Roman',serif;margin:0 0 1mm}",
+    ".slip .meta{margin:0 0 4mm;font-size:11px;color:#4a524f}",
+    ".slip .lb{font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;",
+      "color:#7c8582;margin:0 0 1.5mm}",
+    ".slip .code{font:500 21px/1 ui-monospace,Consolas,monospace;",
+      "letter-spacing:.16em;color:#191d1c;margin:0}",
+    ".slip .how{margin:4mm 0 0;font-size:10px;color:#7c8582;line-height:1.45}",
+    "@media print{body{padding:0}@page{size:A4;margin:12mm}}"
+  ].join("");
+
+  function slipsDoc(rows){
+    var slips = rows.map(function(r){
+      var s = sessionById(assign(r));
+      return "<div class='slip'><p class='ac'>Shalom Guitar Competition 2026</p>" +
+        "<h2>" + esc(r.name) + "</h2>" +
+        "<p class='meta'>" + esc(r.category) +
+          (s ? " &middot; " + esc(s.dow) + " " + esc(s.date) + ", " + esc(s.time) : "") +
+        "</p>" +
+        "<p class='lb'>Score sheet access code</p>" +
+        "<p class='code'>" + esc(prettyKey(keyFor(r))) + "</p>" +
+        "<p class='how'>Search your child’s name on the competition page, then " +
+          "enter this code to open their score sheet. It is yours alone — " +
+          "please do not pass it on.</p>" +
+      "</div>";
+    }).join("");
+
+    return "<!doctype html><html lang='en'><head><meta charset='utf-8'>" +
+      "<title>Access codes</title><style>" + SLIP_CSS + "</style></head><body>" +
+      "<h1>Score sheet access codes</h1>" +
+      "<p class='lede'>One slip per student &mdash; cut along the dashes and give " +
+        "each family their own. " + rows.length + " in total.</p>" +
+      "<div class='wrap'>" + slips + "</div>" +
+      "<script>window.onload=function(){setTimeout(function(){window.print();},250);};<\/script>" +
+      "</body></html>";
+  }
+
+  $("#codes-print").addEventListener("click", function(){
+    var rows = codeRows();
+    if(!rows.length){ tell($("#say3"), "bad", "Nobody on the roster yet."); return; }
+    var w = null;
+    try{ w = window.open("", "_blank"); }catch(e){ w = null; }
+    if(!w || !w.document){
+      tell($("#say3"), "bad", "The print window was blocked — allow pop-ups for " +
+                              "this page and try again.");
+      return;
+    }
+    w.document.open(); w.document.write(slipsDoc(rows)); w.document.close();
+    tell($("#say3"), "good", rows.length + " slips sent to the printer.");
+  });
+
   $("#wipe").addEventListener("click", function(){
     var n = 0;
     state.forEach(function(r){ if(r.sample) n++; });
@@ -3009,6 +3500,11 @@ window.ShalomRosterGen = (function(){
   window.ShalomRoster = {
     current:  function(){ return state.slice(); },
     count:    function(){ return state.length; },
+    codes:    function(){
+      return state.map(function(r){
+        return {id: r.id, name: r.name, code: prettyKey(keyFor(r))};
+      });
+    },
     json:     function(){ return JSON.stringify(state, null, 1); },
     tally:    function(){ return GEN ? GEN.tally(state) : null; },
     parse:    function(input){ return GEN ? GEN.parse(input) : null; },
