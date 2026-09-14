@@ -8,7 +8,7 @@
   {"id":"s07","name":"Subasinghe Arachchilage Andrina Meghan Appuhamy","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"You Are My Sunshine","artist":"Christina Perri"},
   {"id":"s08","name":"Aaliya Shenali Galanga","category":"Junior","classDay":"Friday","classTime":"5:00 PM","song":"Waka Waka","artist":""},
   {"id":"s09","name":"Anya Yehali Galanga","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Dil Hai Ke Manta Nahin","artist":""},
-  {"id":"s10","name":"Savidu Sulakshana Galgamuwa","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"Three Little Birds","artist":""},
+  {"id":"s10","name":"Savidu Sulakshana Galgamuwa","category":"Junior","classDay":"Sunday","classTime":"5:00 PM","song":"You are my sunshine","artist":""},
   {"id":"s11","name":"Thinuli Monara Withanachchi","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":""},
   {"id":"s12","name":"Savindya Dulshani Galgamuwa","category":"Kids","classDay":"Saturday","classTime":"9:30 AM","song":"If You Are Happy and You Know It","artist":""},
   {"id":"s13","name":"Danith Damsilu Karunarathne","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Top of the World","artist":"Karen Carpenter"},
@@ -63,7 +63,7 @@
   {"id":"s71","name":"W.D. Shayeli Aadya Kahawita","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"Have you Ever Seen the Rain","artist":"Creedance Clearwater Revival"},
   {"id":"s74","name":"Adeesha Thehan Weliwatta","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Country Roads (Forever Country)","artist":""},
   {"id":"s75","name":"Theviru Sejan Jayasundara Kumarasiri","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Rain Rain Go Away","artist":""},
-  {"id":"s77","name":"Reshawn Vanhoff","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Indunil Gangulal","artist":"Rukantha Gunathilake"},
+  {"id":"s77","name":"Reshawn Vanhoff","category":"Youth","classDay":"Saturday","classTime":"9:30 AM","song":"Country roads - Yanna rata wate(Mashup)","artist":"John Denver - Desmond De Silva"},
   {"id":"s78","name":"Yulia Samarasekara","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Country Roads","artist":"John Denver"},
   {"id":"s79","name":"Aanya Shemaiah Cooray","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"Me Rata Mage Rata and Rosa Male","artist":""},
   {"id":"s80","name":"Yoana De Silva","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"You Are My Sunshine / Jamaica Farewell","artist":""},
@@ -176,5 +176,50 @@
     "classTime": "3:00 PM",
     "song": "Grenade",
     "artist": "Bruno Mars"
+  },
+  {
+    "id": "s111",
+    "name": "U.S. Aliya",
+    "category": "",
+    "classDay": "Friday",
+    "classTime": "3:30 PM - 5:00 PM",
+    "song": "Aju Thapara Lahila",
+    "artist": "Deepika Priyadarshani / Rohana Weerasinghe"
+  },
+  {
+    "id": "s112",
+    "name": "W.D. Omila Onadith",
+    "category": "Youth",
+    "classDay": "Friday",
+    "classTime": "5:00PM",
+    "song": "Me Wedikawa Jeewithe Ape",
+    "artist": "Athula Adhikari"
+  },
+  {
+    "id": "s113",
+    "name": "Sayumi Nethaya Perera",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "5:00PM",
+    "song": "Mashup: Riptide, Sihina Mawannathi, Un Poco Loco",
+    "artist": "Vance Joy / Wayo / Miguel"
+  },
+  {
+    "id": "s114",
+    "name": "Malinda Pasan Rupasinghe",
+    "category": "Youth",
+    "classDay": "Sunday",
+    "classTime": "3:00 PM",
+    "song": "Perfect / At My Worst",
+    "artist": "Ed Sheeran / Pink Sweat$"
+  },
+  {
+    "id": "s115",
+    "name": "Inuja Perera",
+    "category": "Junior",
+    "classDay": "Friday",
+    "classTime": "3:30 PM",
+    "song": "Merata Mage Rata",
+    "artist": ""
   }
 ]
