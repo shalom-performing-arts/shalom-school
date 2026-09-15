@@ -860,6 +860,10 @@ body:not(.writer) .kill{display:none}
   padding-bottom:7px;border-bottom:1px solid var(--line2);
 }
 .sc-tbl tbody th{font-weight:500;color:var(--ink);line-height:1.35}
+.sc-tbl tbody th .sc-desc{
+  display:block;margin-top:4px;max-width:44ch;
+  font-size:11.5px;font-weight:400;line-height:1.45;color:var(--ink3);
+}
 .sc-tbl .max,.sc-tbl .got{
   width:66px;text-align:right;font-family:var(--mono);font-size:13px;
 }
@@ -1278,10 +1282,32 @@ footer p{
      Marks are optional and all blank for now — the score sheet on a searched
      child's card shows ruled blanks until they are filled in. To publish a
      result, add to that student's object:
-       "scores":{"playing":9,"rhythm":7,"changes":5,"vocal":5,
-                 "dynamics":4,"understanding":4,"stage":4,"creativity":3},
-       "strengths":"...","improve":"...","adjudicator":"..."
-     Keys are the eight criteria of the official sheet (10+8+6+6+5+5+5+5 = 50);
+       "result":{
+         "scores":{"playing":17,"rhythm":13,"changes":10,"vocal":10,
+                   "dynamics":8,"understanding":8,"stage":9,"creativity":7},
+         "strengths":"...","improve":"...","adjudicator":"..."
+       }
+     One  result  key holds the whole judged sheet: leave it out and the
+     student is simply unjudged. The older flat shape, with scores and notes
+     at the top level, is still accepted and folded into  result  on load.
+
+     To give every unjudged student the same sheet — a template, or dummy
+     marks to see the page filled in — wrap the file instead of repeating
+     the block on all of them:
+       { "defaults": { "result": { ...one sheet... } },
+         "students": [ ...the roster... ] }
+     A student with their own  result  keeps it; everyone else shows the
+     default. Delete the  defaults  key and the sheets go back to blank.
+
+     Marks and notes may also be written in as "-", which reads as not yet
+     filled in rather than as a zero or a comment. So the shape of a sheet
+     can sit in every student from the start, ready to be typed over:
+       "result":{"scores":{"playing":"-","rhythm":"-", ...},
+                 "strengths":"-","improve":"-","adjudicator":"-"}
+     A sheet still entirely at "-" counts as unjudged, so a  defaults  block
+     shows through it; replace the dashes and that student's own marks win.
+     Score keys are the eight criteria of the official sheet
+     (20+16+12+12+10+10+10+10 = 100);
      leave a key out, or blank, and that one row stays unscored.
 
      Sessions are worked out from classDay + classTime, never stored:
@@ -1400,14 +1426,62 @@ window.ShalomRosterGen = (function(){
     return t;
   }
 
+  /* An unfilled cell in the roster is written by hand as "-", so the shape of
+     a sheet can sit in the file before anyone has judged it. It reads as a
+     placeholder, exactly like leaving the key out or blank — never as a mark
+     of zero, and never as a comment saying "-". Dashes of every kind count,
+     since a copy-paste often brings an en or em dash along. */
+  /* True when a sheet carries no real mark and no real note — every cell
+     either missing or still a dash. */
+  function allPlaceholder(res){
+    var s = res.scores, k;
+    if(s && typeof s === "object"){
+      for(k in s){
+        if(Object.prototype.hasOwnProperty.call(s, k) && !blankish(s[k])) return false;
+      }
+    }
+    if(!blankish(res.strengths)) return false;
+    if(!blankish(res.improve)) return false;
+    if(!blankish(res.adjudicator)) return false;
+    return true;
+  }
+
+  function blankish(v){
+    if(v === null || v === undefined) return true;
+    var s = String(v).trim();
+    return s === "" || s === "-" || s === "–" || s === "—";
+  }
+
   /* Turn whatever was pasted into clean roster rows.
      Accepts an array of objects, a JSON string, or one student per line:
         Name | Category | Day | Time | Song | Artist
      Pipes are safest — song titles often contain commas. Tabs work too
      (so a spreadsheet column-copy pastes straight in), and commas are the
      last resort. Blank lines and lines starting with # are skipped. */
+  /* A roster may arrive as a bare array, or wrapped:
+
+       { "defaults": { "result": { ... } }, "students": [ ... ] }
+
+     The wrapper carries one sheet — marks, notes, adjudicator — that stands
+     in for every student who has none of their own, so a template or a set
+     of dummy marks lives in one place instead of once per child. Pulls the
+     students out and hands the default back through  box.result. */
+  function unwrap(data, box){
+    if(data && typeof data === "object" && !Array.isArray(data) &&
+       Array.isArray(data.students)){
+      if(data.defaults && typeof data.defaults === "object" &&
+         data.defaults.result && typeof data.defaults.result === "object"){
+        box.result = data.defaults.result;
+      }
+      return data.students;
+    }
+    return data;
+  }
+
   function parse(input){
-    var rows = [], problems = [];
+    var rows = [], problems = [], box = {};
+
+    input = unwrap(input, box);
 
     if(Array.isArray(input)){
       rows = input.slice();
@@ -1419,6 +1493,7 @@ window.ShalomRosterGen = (function(){
         var data;
         try { data = JSON.parse(text); }
         catch(e){ return {rows: [], problems: ["That is not valid JSON — " + e.message]}; }
+        data = unwrap(data, box);
         rows = Array.isArray(data) ? data : [data];
       } else {
         text.split(/\r?\n/).forEach(function(line){
@@ -1493,14 +1568,36 @@ window.ShalomRosterGen = (function(){
         }
       }
 
-      /* Marks, when there are any. Keys are the score-sheet criteria; a
-         missing or blank value means that criterion is not judged yet. */
-      if(r.scores && typeof r.scores === "object" && !Array.isArray(r.scores)){
+      /* Everything the adjudicators produce sits together under  result  —
+         one key to add when a sheet has been judged, one to leave out while
+         it has not. Marks are keyed by the score-sheet criteria; a missing or
+         blank value means that criterion is not judged yet.
+
+         A flat row, with scores/strengths/improve/adjudicator at the top
+         level, is still read and folded in, so a roster written before the
+         change — or pasted from an older copy — does not lose its marks. */
+      /* Where this student's marks and notes come from, in order: their own
+         result block, the older flat fields on the row itself, then the
+         file's  defaults.result. A student who has been judged always keeps
+         their own sheet — the default only fills an empty one.
+
+         "Empty" includes a sheet still sitting at its placeholders: a row
+         carrying  result  full of "-" has not been judged, so it hands over
+         to the default the same as a row with no  result  at all. That way
+         the template can live in every student and a defaults block still
+         shows through underneath it. */
+      var own = (r.result && typeof r.result === "object" && !Array.isArray(r.result))
+        ? r.result
+        : ((r.scores || r.strengths || r.improve || r.adjudicator) ? r : null);
+      var from = (own && !allPlaceholder(own)) ? own : (box.result || own || {});
+      var result = {}, anyResult = false;
+
+      if(from.scores && typeof from.scores === "object" && !Array.isArray(from.scores)){
         var marks = {}, anyMark = false;
-        for(var k in r.scores){
-          if(!Object.prototype.hasOwnProperty.call(r.scores, k)) continue;
-          var raw = r.scores[k];
-          if(raw === null || raw === undefined || String(raw).trim() === "") continue;
+        for(var k in from.scores){
+          if(!Object.prototype.hasOwnProperty.call(from.scores, k)) continue;
+          var raw = from.scores[k];
+          if(blankish(raw)) continue;
           var num = Number(raw);
           if(!isFinite(num)){
             problems.push(where + " (" + name + "): score \"" + k +
@@ -1509,12 +1606,14 @@ window.ShalomRosterGen = (function(){
           }
           marks[k] = num; anyMark = true;
         }
-        if(anyMark) row.scores = marks;
+        if(anyMark){ result.scores = marks; anyResult = true; }
       }
       ["strengths","improve","adjudicator"].forEach(function(f){
-        var t = String(r[f] == null ? "" : r[f]).trim();
-        if(t) row[f] = t;
+        if(blankish(from[f])) return;
+        result[f] = String(from[f]).trim();
+        anyResult = true;
       });
+      if(anyResult) row.result = result;
       clean.push(row);
     });
 
@@ -1939,14 +2038,22 @@ window.ShalomRosterGen = (function(){
   /* The eight criteria and their full marks, exactly as on the printed sheet
      the adjudicators fill in. They add up to SCORE_MAX. */
   var CRITERIA = [
-    {key:"playing",       label:"Guitar Playing & Chord Accuracy", max:10},
-    {key:"rhythm",        label:"Rhythm & Tempo",                  max:8},
-    {key:"changes",       label:"Chord Changes & Continuity",      max:6},
-    {key:"vocal",         label:"Vocal Performance",               max:6},
-    {key:"dynamics",      label:"Dynamics & Musical Expression",   max:5},
-    {key:"understanding", label:"Song Understanding & Expression", max:5},
-    {key:"stage",         label:"Stage Performance & Confidence",  max:5},
-    {key:"creativity",    label:"Creativity & Variations",         max:5}
+    {key:"playing",       label:"Guitar Playing & Chord Accuracy", max:20,
+     desc:"Clean fretting, accurate chord shapes, and notes that ring true."},
+    {key:"rhythm",        label:"Rhythm & Tempo",                  max:16,
+     desc:"A steady beat held from first bar to last, at the tempo the song asks for."},
+    {key:"changes",       label:"Chord Changes & Continuity",      max:12,
+     desc:"Moving between chords without a stumble, so the song never stops to catch up."},
+    {key:"vocal",         label:"Vocal Performance",               max:12,
+     desc:"Pitch, clear words, and singing that sits comfortably with the playing."},
+    {key:"dynamics",      label:"Dynamics & Musical Expression",   max:10,
+     desc:"Soft and loud used on purpose, shaping the song instead of playing it flat."},
+    {key:"understanding", label:"Song Understanding & Expression", max:10,
+     desc:"Knowing what the song is about, and letting that show in the performance."},
+    {key:"stage",         label:"Stage Performance & Confidence",  max:10,
+     desc:"Posture, presence, and composure in front of an audience."},
+    {key:"creativity",    label:"Creativity & Variations",         max:10,
+     desc:"A touch of their own — strumming patterns, arrangement ideas, personal flair."}
   ];
 
   var SCORE_MAX = (function(){
@@ -2098,12 +2205,21 @@ window.ShalomRosterGen = (function(){
     "</div>";
   }
 
+  /* The judged half of a row — marks and the adjudicator's notes — or an
+     empty stand-in while nobody has filled the sheet in. Every read of a
+     mark or a note goes through here, so an unjudged row needs no guards of
+     its own. */
+  function resultOf(r){
+    return (r && r.result && typeof r.result === "object") ? r.result : {};
+  }
+
   /* One criterion's mark, or null while it is still unjudged. Marks ride on
-     the roster row as  scores:{playing:9, rhythm:7, ...}, keyed as in
-     CRITERIA. No scores key, or a key left blank, reads as not yet scored. */
+     the roster row as  result:{scores:{playing:17, rhythm:13, ...}}, keyed as
+     in CRITERIA. No scores key, or a key left blank, reads as not yet scored. */
   function markOf(r, key){
-    if(!r.scores || typeof r.scores !== "object") return null;
-    var v = r.scores[key];
+    var scores = resultOf(r).scores;
+    if(!scores || typeof scores !== "object") return null;
+    var v = scores[key];
     if(v === null || v === undefined || v === "") return null;
     v = Number(v);
     return isFinite(v) ? v : null;
@@ -2195,7 +2311,9 @@ window.ShalomRosterGen = (function(){
       var v = markOf(r, c.key);
       if(v !== null){ scored++; sum += v; }
       rows += "<tr>" +
-        '<th scope="row">' + esc(c.label) + "</th>" +
+        '<th scope="row">' + esc(c.label) +
+          (c.desc ? '<small class="sc-desc">' + esc(c.desc) + "</small>" : "") +
+        "</th>" +
         '<td class="max">' + c.max + "</td>" +
         '<td class="got">' + (v === null ? BLANK : esc(v)) + "</td>" +
       "</tr>";
@@ -2260,13 +2378,14 @@ window.ShalomRosterGen = (function(){
 
           '<p class="sc-cap">Overall feedback &amp; suggestions for growth</p>' +
           '<div class="sc-fb">' +
-            fbHtml("Strengths &amp; highlights", r.strengths) +
-            fbHtml("Areas for improvement", r.improve) +
+            fbHtml("Strengths &amp; highlights", resultOf(r).strengths) +
+            fbHtml("Areas for improvement", resultOf(r).improve) +
           "</div>" +
 
           '<p class="sc-sign">' +
             "<span>Adjudicator" +
-              (r.adjudicator ? " <b>" + esc(r.adjudicator) + "</b>" : "<i></i>") +
+              (resultOf(r).adjudicator
+                ? " <b>" + esc(resultOf(r).adjudicator) + "</b>" : "<i></i>") +
             "</span>" +
             "<span>Signature<i></i></span>" +
           "</p>" +
@@ -2460,6 +2579,8 @@ window.ShalomRosterGen = (function(){
     "table.sc thead th{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;",
       "color:#7c8582;border-bottom:1.5px solid #c9cfcb}",
     "table.sc tbody th{font-size:14px;font-weight:500}",
+    "table.sc tbody th small{display:block;margin-top:3px;max-width:60ch;",
+    "font-size:10.5px;font-weight:400;line-height:1.45;color:#7c8582}",
     "table.sc .m,table.sc .a{width:92px;text-align:right;white-space:nowrap}",
     "table.sc .m{color:#7c8582}",
     "table.sc tfoot th,table.sc tfoot td{border-bottom:0;border-top:2px solid #c0902e;",
@@ -2492,7 +2613,8 @@ window.ShalomRosterGen = (function(){
     CRITERIA.forEach(function(c){
       var v = markOf(r, c.key);
       if(v !== null){ scored++; sum += v; }
-      rows += "<tr><th scope='row'>" + esc(c.label) + "</th>" +
+      rows += "<tr><th scope='row'>" + esc(c.label) +
+        (c.desc ? "<small>" + esc(c.desc) + "</small>" : "") + "</th>" +
         "<td class='m'>" + c.max + "</td>" +
         "<td class='a'>" + (v === null ? "<i class='bl'></i>" : esc(v)) + "</td></tr>";
     });
@@ -2530,11 +2652,12 @@ window.ShalomRosterGen = (function(){
         "</td></tr></tfoot></table>" +
 
       "<h2>Overall feedback &amp; suggestions for growth</h2>" +
-      sheetFbBlock("Strengths &amp; highlights", r.strengths) +
-      sheetFbBlock("Areas for improvement", r.improve) +
+      sheetFbBlock("Strengths &amp; highlights", resultOf(r).strengths) +
+      sheetFbBlock("Areas for improvement", resultOf(r).improve) +
 
       "<table class='sign'><tbody>" +
-        "<tr><td>" + (r.adjudicator ? esc(r.adjudicator) : "") + "</td><td></td></tr>" +
+        "<tr><td>" + (resultOf(r).adjudicator ? esc(resultOf(r).adjudicator) : "") +
+          "</td><td></td></tr>" +
         "<tr><td class='lb'>Adjudicator</td><td class='lb'>Signature</td></tr>" +
       "</tbody></table>" +
 
