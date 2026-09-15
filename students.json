@@ -102,5 +102,18 @@
   {"id":"s113","name":"Sayumi Nethaya Perera","key":"DT4XD7","category":"Youth","classDay":"Sunday","classTime":"5:00PM","song":"Mashup: Riptide, Sihina Mawannathi, Un Poco Loco","artist":"Vance Joy / Wayo / Miguel"},
   {"id":"s114","name":"Malinda Pasan Rupasinghe","key":"TX2TW2","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Perfect / At My Worst","artist":"Ed Sheeran / Pink Sweat$"},
   {"id":"s115","name":"Inuja Perera","key":"3P9RKH","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Merata Mage Rata","artist":""},
-  {"id":"s116","name":"Araliya Heendeniya","key":"CETZY4","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Aju Thapara Lahila","artist":""}
+  {"id":"s116","name":"Araliya Heendeniya","key":"CETZY4","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Aju Thapara Lahila","artist":""},
+  {"id":"s117","name":"Pabasara Rathnayaka","key":"ZEAON8","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Waka Waka","artist":"Shakira"},
+  {"id":"s118","name":"Sihath Kithnuka","key":"O6935Z","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Counting Stars","artist":"OneRepublic"},
+  {"id":"s119","name":"Zaki Azhar","key":"DC9WAJ","category":"Junior","classDay":"Thursday","classTime":"3:30 PM","song":"Wavin' Flag","artist":""},
+  {"id":"s120","name":"Zaiden Azhar","key":"7PB3IR","category":"Junior","classDay":"Thursday","classTime":"3:30 PM","song":"Waka Waka","artist":""},
+  {"id":"s121","name":"Jason Joel Jayawardena","key":"MBTKVY","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Mashup: Ira Basa Giya Thana Nae / Nihanda Mawathe","artist":"Rookantha Gunathilaka"},
+  {"id":"s122","name":"Evin Dulnitha De Abrew","key":"DGOPQS","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"You Are My Sunshine","artist":""},
+  {"id":"s123","name":"Vethmi Ranasinghe","key":"NPC72E","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"You Are My Sunshine","artist":"","note":"Possible duplicate of s14 (R.A. Vethmi Vohara Ranasinghe, Kids Saturday 3:00 PM) — please confirm whether this is the same child."},
+  {"id":"s124","name":"Gayumdee Thathsandi","key":"RT9INM","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Me Rata Mage Rata","artist":""},
+  {"id":"s125","name":"Ryley Rabot","key":"4OXHFK","category":"Kids","classDay":"Thursday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":"","note":"Thursday 5:00 PM is not an existing class slot (Thursday runs 3:30 PM) — please confirm."},
+  {"id":"s126","name":"Fabin Mihel","key":"DSPMHD","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"Rain Rain Go Away / Wheels on the Bus","artist":""},
+  {"id":"s127","name":"Sanuli Dewya Madahapola","key":"RHHTMT","category":"Kids","classDay":"Wednesday","classTime":"5:00 PM","song":"Ambili Mame Oba Mokada Karanne","artist":""},
+  {"id":"s128","name":"Hiviru Senitha Leelarathna","key":"C6QV3J","category":"Kids","classDay":"Wednesday","classTime":"5:00 PM","song":"Rain Rain Go Away / Baby Shark","artist":""},
+  {"id":"s129","name":"Hesara Onithi Leelarathna","key":"PH7TA2","category":"Junior","classDay":"Wednesday","classTime":"5:00 PM","song":"Three Little Birds","artist":""}
 ]
