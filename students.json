@@ -175,7 +175,7 @@
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
     {"id":"s66","name":"Teshini Samarasekara","key":"MGVUGZ","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Me Wedikawa Jeewithe Ape","artist":"",
-     "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"updated","understanding":"-","stage":"-","creativity":"-"},
+     "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"4","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
     {"id":"s68","name":"Viha Dhanashi","key":"XVBXK8","category":"Kids","classDay":"Saturday","classTime":"11:30 AM","song":"You Are My Sunshine","artist":"Christina Perri",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
@@ -361,6 +361,9 @@
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
     {"id":"s133","name":"Sayuni Sadinsa","key":"TR8T8F","category":"Youth","classDay":"Sunday","classTime":"3:00 PM","song":"Hallelujah","artist":"Leonard Cohen",
+     "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
+               "strengths":"-","improve":"-","adjudicator":"-"}},
+    {"id":"s134","name":"Zendaya De Silva","key":"3RQW28","category":"Kids","classDay":"Sunday","classTime":"11:10 AM","song":"Top of the World","artist":"The Carpenters","note":"Sunday 12:30 PM is not an existing class slot (Sunday runs 11:00 AM, 3:00 PM, 5:00 PM). After noon, so assigned to the Oct 4 afternoon session — Yoana and Evaan De Silva are in the Oct 4 morning session. Please confirm.",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}}
   ]
