@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F5F6F4" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F1312" media="(prefers-color-scheme: dark)">
-<title>Shalom Guitar Competition 2026</title>
+<title>Shalom Guitar &amp; Vocal Challenge 2026</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
 <style>
@@ -1709,7 +1709,8 @@ window.ShalomRosterGen = (function(){
       Shalom Academy of Performing Arts
     </p>
     <h1>
-      <span class="ln">Shalom Guitar Competition</span>
+      <span class="ln">Shalom Guitar &amp; Vocal</span>
+      <span class="ln">Challenge</span>
       <span class="ln goldtext">2026</span>
     </h1>
     <p class="tagline">
@@ -2552,57 +2553,72 @@ window.ShalomRosterGen = (function(){
     return "<section class='fb'><h3>" + title + "</h3>" +
       (text
         ? "<p>" + esc(text) + "</p>"
-        : "<div class='ru'><i></i><i></i><i></i><i></i></div>") +
+        : "<div class='ru'><i></i><i></i><i></i></div>") +
       "</section>";
   }
 
   var SHEET_CSS = [
     "*{box-sizing:border-box}",
     "html{-webkit-text-size-adjust:100%}",
-    "body{margin:0;padding:24px 20px 40px;background:#fff;color:#191d1c;",
-      "font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}",
-    ".sheet{max-width:760px;margin:0 auto}",
-    ".top{border-bottom:3px solid #c0902e;padding-bottom:15px;margin:0 0 22px}",
-    ".ac{margin:0 0 9px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#82591a}",
-    "h1{margin:0;font-size:26px;line-height:1.15;letter-spacing:-.02em}",
-    ".kind{margin:10px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7c8582}",
-    ".meta{width:100%;border-collapse:collapse;margin:0 0 26px;table-layout:fixed}",
-    ".meta th,.meta td{border:1px solid #dfe3e0;padding:9px 11px;text-align:left;",
+    /* Tuned so the whole sheet — every criterion, both feedback boxes and the
+       signatures — lands inside a single A4 page. One piece of paper per
+       child; nothing carries over to a second sheet. */
+    "html,body{height:100%}",
+    "body{margin:0;padding:11mm;background:#fff;color:#191d1c;",
+      "font:13px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}",
+    /* One A4 page, minus its margins, laid out as a column. Everything above
+       the writing area is a fixed height; .fbwrap is the only thing that
+       stretches, so the ruled lines swallow the leftover room and the
+       signatures always sit on the bottom edge. */
+    ".sheet{max-width:760px;margin:0 auto;min-height:calc(297mm - 22mm);",
+      "display:flex;flex-direction:column}",
+    ".fbwrap{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}",
+    ".fbwrap .fb{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}",
+    ".fbwrap .fb .ru{flex:1 1 auto;display:flex;flex-direction:column;",
+      "justify-content:space-around}",
+    ".fbwrap .fb .ru i{margin:0}",
+    ".top{border-bottom:2.5px solid #c0902e;padding-bottom:8px;margin:0 0 11px}",
+    ".ac{margin:0 0 5px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#82591a}",
+    "h1{margin:0;font-size:20px;line-height:1.1;letter-spacing:-.02em}",
+    ".kind{margin:5px 0 0;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#7c8582}",
+    ".meta{width:100%;border-collapse:collapse;margin:0 0 12px;table-layout:fixed}",
+    ".meta th,.meta td{border:1px solid #dfe3e0;padding:5px 8px;text-align:left;",
       "vertical-align:top;word-wrap:break-word}",
-    ".meta th{width:34%;font-size:10px;letter-spacing:.1em;text-transform:uppercase;",
+    ".meta th{width:15%;font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;",
       "color:#7c8582;font-weight:400;background:#f7f8f6}",
-    ".meta td{font-size:14.5px;font-weight:600}",
-    "h2{margin:26px 0 8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#82591a}",
+    ".meta td{font-size:12px;font-weight:600}",
+    "h2{margin:12px 0 5px;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#82591a}",
     "table.sc{width:100%;border-collapse:collapse}",
-    "table.sc th,table.sc td{padding:10px 8px;text-align:left;",
+    "table.sc th,table.sc td{padding:7px 7px;text-align:left;",
       "border-bottom:1px solid #dfe3e0;font-weight:400}",
-    "table.sc thead th{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;",
-      "color:#7c8582;border-bottom:1.5px solid #c9cfcb}",
-    "table.sc tbody th{font-size:14px;font-weight:500}",
-    "table.sc tbody th small{display:block;margin-top:3px;max-width:60ch;",
-    "font-size:10.5px;font-weight:400;line-height:1.45;color:#7c8582}",
-    "table.sc .m,table.sc .a{width:92px;text-align:right;white-space:nowrap}",
+    "table.sc thead th{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;",
+      "color:#7c8582;border-bottom:1.5px solid #c9cfcb;padding-bottom:4px}",
+    "table.sc tbody th{font-size:12px;font-weight:600}",
+    "table.sc tbody th small{display:block;margin-top:1px;max-width:72ch;",
+    "font-size:9px;font-weight:400;line-height:1.3;color:#7c8582}",
+    "table.sc .m,table.sc .a{width:74px;text-align:right;white-space:nowrap}",
     "table.sc .m{color:#7c8582}",
     "table.sc tfoot th,table.sc tfoot td{border-bottom:0;border-top:2px solid #c0902e;",
-      "padding-top:13px;font-weight:700}",
-    "table.sc tfoot .a{font-size:17px;color:#82591a}",
-    ".bl{display:inline-block;width:46px;height:.95em;border-bottom:1.4px solid #9aa39f}",
-    ".fb{border:1px solid #dfe3e0;border-radius:8px;padding:12px 13px;margin:0 0 10px}",
-    ".fb h3{margin:0;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;",
+      "padding-top:7px;font-weight:700;font-size:13px}",
+    "table.sc tfoot .a{font-size:15px;color:#82591a}",
+    ".bl{display:inline-block;width:58px;height:1.15em;border-bottom:1.4px solid #9aa39f}",
+    ".fb{border:1px solid #dfe3e0;border-radius:7px;padding:7px 10px;margin:0 0 7px}",
+    ".fb h3{margin:0;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;",
       "color:#7c8582;font-weight:400}",
-    ".fb p{margin:9px 0 0;font-size:14px;line-height:1.6}",
-    ".ru{margin:14px 0 4px}",
-    ".ru i{display:block;height:1px;background:#c9cfcb;margin:0 0 15px}",
-    ".sign{width:100%;border-collapse:collapse;margin:22px 0 0}",
-    ".sign td{padding:26px 12px 7px;border-bottom:1px solid #9aa39f;width:50%}",
-    ".sign .lb{border:0;padding:6px 12px 0;font-size:9.5px;letter-spacing:.12em;",
+    ".fb p{margin:5px 0 0;font-size:12px;line-height:1.45}",
+    ".ru{margin:8px 0 2px}",
+    ".ru i{display:block;height:1px;background:#c9cfcb;margin:0 0 13px}",
+    ".sign{width:100%;border-collapse:collapse;margin:12px 0 0;flex:none}",
+    ".sign td{padding:24px 10px 5px;border-bottom:1px solid #9aa39f;width:50%}",
+    ".sign .lb{border:0;padding:4px 10px 0;font-size:8.5px;letter-spacing:.12em;",
       "text-transform:uppercase;color:#7c8582}",
-    ".note{margin:24px 0 0;border:1px dashed #c0902e;border-radius:8px;",
-      "padding:11px 13px;font-size:12.5px;color:#4a524f;background:#fdf9ef}",
-    "footer{margin:26px 0 0;padding-top:13px;border-top:1px solid #dfe3e0;",
-      "font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;",
+    "footer{margin:11px 0 0;padding-top:7px;border-top:1px solid #dfe3e0;",
+      "font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;",
       "color:#7c8582;text-align:center}",
-    "@media print{body{padding:0}@page{size:A4;margin:14mm}",
+    "@media print{@page{size:A4;margin:11mm}",
+      "body{padding:0}",
+      ".sheet{max-width:none;min-height:calc(297mm - 22mm)}",
+      "table.sc tr,section.fb,.sign{break-inside:avoid;page-break-inside:avoid}",
       "body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}"
   ].join("");
 
@@ -2623,7 +2639,6 @@ window.ShalomRosterGen = (function(){
     var when = s
       ? esc(s.dow) + ", " + esc(s.date) + " &middot; " + esc(s.time)
       : "To be confirmed";
-    var usual = [r.classDay, r.classTime].filter(Boolean).join(" ");
 
     return "<!doctype html><html lang='en'><head><meta charset='utf-8'>" +
       "<meta name='viewport' content='width=device-width, initial-scale=1'>" +
@@ -2631,16 +2646,19 @@ window.ShalomRosterGen = (function(){
       "<style>" + SHEET_CSS + "</style></head><body><div class='sheet'>" +
 
       "<div class='top'><p class='ac'>Shalom Academy of Performing Arts</p>" +
-      "<h1>Shalom Guitar Competition 2026</h1>" +
+      "<h1>Shalom Guitar &amp; Vocal Challenge 2026</h1>" +
       "<p class='kind'>Official score sheet</p></div>" +
 
+      /* The judge needs the day the child stands in front of them, not the
+         class they attend midweek — so the performance day stands alone here
+         and the usual class is left off the sheet. Paired columns keep the
+         whole block to three rows. */
       "<table class='meta'><tbody>" +
-        "<tr><th>Student</th><td>" + esc(r.name) + "</td></tr>" +
-        "<tr><th>Category</th><td>" + esc(r.category) + "</td></tr>" +
-        "<tr><th>Session</th><td>" + when + "</td></tr>" +
-        "<tr><th>Song</th><td>" + (r.song ? esc(r.song) : "&mdash;") + "</td></tr>" +
-        "<tr><th>Artist</th><td>" + (r.artist ? esc(r.artist) : "&mdash;") + "</td></tr>" +
-        "<tr><th>Usual class</th><td>" + (usual ? esc(usual) : "&mdash;") + "</td></tr>" +
+        "<tr><th>Student</th><td>" + esc(r.name) + "</td>" +
+            "<th>Category</th><td>" + esc(r.category) + "</td></tr>" +
+        "<tr><th>Performance</th><td colspan='3'>" + when + "</td></tr>" +
+        "<tr><th>Song</th><td>" + (r.song ? esc(r.song) : "&mdash;") + "</td>" +
+            "<th>Artist</th><td>" + (r.artist ? esc(r.artist) : "&mdash;") + "</td></tr>" +
       "</tbody></table>" +
 
       "<h2>Scoring criteria &amp; evaluation</h2>" +
@@ -2652,8 +2670,10 @@ window.ShalomRosterGen = (function(){
         "</td></tr></tfoot></table>" +
 
       "<h2>Overall feedback &amp; suggestions for growth</h2>" +
-      sheetFbBlock("Strengths &amp; highlights", resultOf(r).strengths) +
-      sheetFbBlock("Areas for improvement", resultOf(r).improve) +
+      "<div class='fbwrap'>" +
+        sheetFbBlock("Strengths &amp; highlights", resultOf(r).strengths) +
+        sheetFbBlock("Areas for improvement", resultOf(r).improve) +
+      "</div>" +
 
       "<table class='sign'><tbody>" +
         "<tr><td>" + (resultOf(r).adjudicator ? esc(resultOf(r).adjudicator) : "") +
@@ -2661,11 +2681,8 @@ window.ShalomRosterGen = (function(){
         "<tr><td class='lb'>Adjudicator</td><td class='lb'>Signature</td></tr>" +
       "</tbody></table>" +
 
-      (full ? "" :
-        "<p class='note'>No marks have been entered yet. This is the sheet the " +
-        "adjudicators fill in on the day &mdash; print it as it stands, or save " +
-        "it again once " + esc(String(r.name).split(" ")[0]) +
-        "&rsquo;s session has been judged.</p>") +
+      /* No "not judged yet" note: an unmarked sheet is exactly the point when
+         it is handed to a judge, and the line cost a fifth of a page. */
 
       "<footer>Shalom Academy of Performing Arts &middot; October 2026</footer>" +
       "</div>" +
@@ -3486,7 +3503,7 @@ window.ShalomRosterGen = (function(){
   function slipsDoc(rows){
     var slips = rows.map(function(r){
       var s = sessionById(assign(r));
-      return "<div class='slip'><p class='ac'>Shalom Guitar Competition 2026</p>" +
+      return "<div class='slip'><p class='ac'>Shalom Guitar &amp; Vocal Challenge 2026</p>" +
         "<h2>" + esc(r.name) + "</h2>" +
         "<p class='meta'>" + esc(r.category) +
           (s ? " &middot; " + esc(s.dow) + " " + esc(s.date) + ", " + esc(s.time) : "") +
@@ -3629,6 +3646,18 @@ window.ShalomRosterGen = (function(){
       });
     },
     json:     function(){ return JSON.stringify(state, null, 1); },
+    /* One student's score sheet as a standalone HTML document, ready to be
+       saved or printed. Takes an id or a full name. Handy for running off
+       the whole roster in one go rather than a click at a time. */
+    sheet:    function(who){
+      var q = String(who == null ? "" : who).trim().toLowerCase(), r = null;
+      for(var i = 0; i < state.length; i++){
+        if(String(state[i].id).toLowerCase() === q ||
+           String(state[i].name).toLowerCase() === q){ r = state[i]; break; }
+      }
+      if(!r) throw new Error("No student matches \"" + who + "\".");
+      return sheetDoc(r, false);
+    },
     tally:    function(){ return GEN ? GEN.tally(state) : null; },
     parse:    function(input){ return GEN ? GEN.parse(input) : null; },
     generate: function(opts){ return GEN ? GEN.generate(opts) : null; },
