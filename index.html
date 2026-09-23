@@ -973,6 +973,120 @@ body:not(.writer) .kill{display:none}
 .wa:hover{filter:brightness(1.08);box-shadow:0 8px 26px -6px rgba(18,140,62,.6)}
 .wa:active{transform:scale(.97)}
 
+/* ---------- how the marking works ---------- */
+.marking{margin:0}
+.mk-intro{margin:0 0 24px;max-width:62ch}
+.mk-intro p{margin:0;font-size:clamp(16.5px,4.4vw,17.5px);line-height:1.58;color:var(--ink2)}
+.mk-intro p + p{margin-top:12px}
+.mk-intro .lead{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(26px,7vw,34px);line-height:1.12;letter-spacing:-.024em;
+  color:var(--ink);text-wrap:balance;margin-bottom:4px;
+}
+.mk-intro b{color:var(--ink);font-weight:600}
+
+.crits{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){ .crits{grid-template-columns:1fr 1fr} }
+.crit{
+  background:var(--card);border:1px solid var(--line);border-radius:15px;
+  padding:16px 17px 15px;box-shadow:var(--lift);
+}
+.crit header{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:10px;margin:0 0 9px;
+}
+.crit .cem{font-size:19px;line-height:1}
+.crit h4{
+  margin:0;font-family:var(--display);font-weight:700;font-size:17px;
+  line-height:1.16;letter-spacing:-.016em;color:var(--ink);
+}
+.crit .cmark{
+  flex:none;text-align:right;line-height:1;white-space:nowrap;
+  padding-left:10px;border-left:1px solid var(--line);
+}
+.crit .cmark b{
+  display:block;font-family:var(--mono);font-size:20px;font-weight:500;
+  color:var(--gold-3);font-variant-numeric:tabular-nums;
+}
+.crit .cmark i{
+  display:block;margin-top:2px;font-family:var(--mono);font-style:normal;
+  font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);
+}
+.crit .clead{margin:0 0 11px;font-size:15px;line-height:1.5;color:var(--ink2)}
+.crit .chd{
+  margin:0 0 6px;font-family:var(--mono);font-size:9px;font-weight:500;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--gold-3);
+}
+.crit ul{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.crit li{
+  position:relative;padding-left:15px;font-size:14.5px;line-height:1.5;color:var(--ink2);
+}
+.crit li::before{
+  content:"";position:absolute;left:0;top:7px;width:5px;height:5px;
+  border-radius:50%;background:var(--gold-2);opacity:.65;
+}
+.crit .cprac{
+  margin:12px 0 0;padding:11px 12px;border-radius:10px;
+  background:var(--sunk);border:1px solid var(--line);
+}
+.crit .cprac .tag{
+  display:block;margin:0 0 4px;font-family:var(--mono);font-size:8.5px;
+  font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-3);
+}
+.crit .cprac p{margin:0;font-size:14.5px;line-height:1.52;color:var(--ink2)}
+.crit .cprac b{color:var(--ink);font-weight:600}
+
+.mk-total{
+  margin:16px 0 0;padding:18px 20px;border-radius:16px;
+  border:1px solid var(--gold-2);
+  background:linear-gradient(168deg,
+    color-mix(in srgb, var(--gold-1) 24%, var(--card)), var(--card) 78%);
+  box-shadow:var(--lift);
+}
+.mk-total h4{
+  margin:0 0 10px;font-family:var(--display);font-weight:700;font-size:19px;
+  letter-spacing:-.018em;color:var(--ink);
+}
+.mk-total table{width:100%;border-collapse:collapse;font-size:14px}
+.mk-total th,.mk-total td{
+  text-align:left;padding:7px 2px;border-bottom:1px solid var(--gold-rim);
+  font-weight:400;color:var(--ink2);
+}
+.mk-total td{
+  width:64px;text-align:right;font-family:var(--mono);font-weight:500;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.mk-total tfoot th,.mk-total tfoot td{
+  border-bottom:0;border-top:2px solid var(--gold-2);padding-top:10px;
+  font-weight:700;color:var(--gold-3);
+}
+.mk-total tfoot td{font-size:17px}
+
+.mk-sheet{
+  margin:12px 0 0;padding:17px 19px;border-radius:15px;
+  background:var(--card);border:1px solid var(--line);
+}
+.mk-sheet h4{
+  margin:0 0 8px;font-family:var(--display);font-weight:700;font-size:18px;
+  letter-spacing:-.016em;color:var(--ink);
+}
+.mk-sheet p{margin:0;font-size:15.5px;line-height:1.55;color:var(--ink2);max-width:60ch}
+.mk-sheet ul{margin:9px 0;padding:0;list-style:none;display:grid;gap:5px}
+.mk-sheet li{font-size:15.5px;line-height:1.5;color:var(--ink2)}
+
+.mk-close{
+  margin:16px 0 0;padding:22px 20px;border-radius:16px;text-align:center;
+  border:1px solid var(--pine);
+  background:color-mix(in srgb, var(--pine) 7%, var(--card));
+}
+.mk-close .big{
+  margin:0 0 10px;font-family:var(--display);font-weight:700;
+  font-size:clamp(21px,5vw,27px);line-height:1.15;letter-spacing:-.022em;color:var(--ink);
+}
+.mk-close p{margin:0 auto;font-size:15px;line-height:1.58;color:var(--ink2);max-width:52ch}
+.mk-close p + p{margin-top:9px}
+.mk-close b{color:var(--ink);font-weight:600}
+
 /* ---------- editor ---------- */
 .admin{margin:38px 0 0;max-width:660px}
 .admin-open{
@@ -1777,30 +1891,58 @@ window.ShalomRosterGen = (function(){
   <div class="sec-label"><span data-render="seclabel">The six sessions</span></div>
   <div class="sched" data-render="sched"></div>
 
-  <section class="enrol">
-    <span class="s-mark" aria-hidden="true">
-      <svg viewBox="0 0 21 15" fill="none">
-        <ellipse cx="3.2" cy="11.4" rx="3.2" ry="2.4" transform="rotate(-18 3.2 11.4)" fill="currentColor"/>
-        <ellipse cx="14.6" cy="10.1" rx="3.2" ry="2.4" transform="rotate(-18 14.6 10.1)" fill="currentColor"/>
-        <path d="M6.3 11V2.8M17.7 9.7V1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M6.3 3.1L17.7 1.7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
-      </svg>
-    </span>
-    <h3>Isn&rsquo;t your child on the list?</h3>
-    <p>Registrations are still open. Message us on WhatsApp and we&rsquo;ll confirm your child&rsquo;s session and time slot straight away.</p>
-    <div class="tmpl">
-      <p class="tmpl-top"><i aria-hidden="true"></i>The message opens ready to fill</p>
-      <dl>
-        <dt><span class="em" aria-hidden="true">&#128100;</span> Child&rsquo;s Name:</dt><dd></dd>
-        <dt><span class="em" aria-hidden="true">&#127919;</span> Category: (Kids / Junior / Youth)</dt><dd></dd>
-        <dt><span class="em" aria-hidden="true">&#128338;</span> Usual Class Day &amp; Time:</dt><dd></dd>
-        <dt><span class="em" aria-hidden="true">&#127926;</span> Song Title &amp; Artist:</dt><dd></dd>
-      </dl>
+  <div class="sec-label"><span>How the marking works</span></div>
+
+  <section class="marking">
+    <div class="mk-intro">
+      <p class="lead">This is not a test.</p>
+      <p>Your child will play on a stage. For most children, it is the
+        first time.</p>
+      <p>Below are the <b>eight areas</b> the judges will listen for. We share
+        them so your child knows what to expect &mdash; not to add pressure.
+        <b>Practise at home calmly.</b> A child who feels ready enjoys the
+        day.</p>
     </div>
-    <a class="wa" href="https://wa.me/94706333778">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.02c-1.5 0-2.97-.4-4.26-1.16l-.3-.18-3.12.82.83-3.04-.2-.32a8.07 8.07 0 0 1-1.24-4.31c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.23 3.7 8.23 8.24 0 4.55-3.69 8.25-8.19 8.25zm4.52-6.16c-.25-.12-1.47-.72-1.69-.8-.23-.09-.4-.13-.56.12-.17.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.06-.39-2.02-1.25-.75-.67-1.25-1.5-1.4-1.75-.14-.25-.01-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.41.09-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.83-.2-.48-.4-.42-.56-.42h-.48c-.16 0-.42.06-.64.31-.22.25-.85.83-.85 2.02 0 1.19.87 2.34.99 2.5.12.17 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.11-.22-.17-.47-.29z"/></svg>
-      Message 0706 333 778
-    </a>
+
+    <div class="crits">
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#127928;</span><h4>Guitar Playing &amp; Chord Accuracy</h4><span class="cmark"><b>20</b><i>marks</i></span></header><p class="clead">How clearly and accurately your child plays the guitar.</p><p class="chd">What the judge listens for</p><ul><li>Clean and correct chords</li><li>No buzzing or muted strings</li><li>Correct notes and chords</li><li>Clear playing</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Ask your child to play each chord slowly. They can also play each string one by one and listen carefully to check that every string sounds clear.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#129345;</span><h4>Rhythm &amp; Tempo</h4><span class="cmark"><b>16</b><i>marks</i></span></header><p class="clead">Keeping a steady beat all the way through the song.</p><p class="chd">What the judge listens for</p><ul><li>A consistent rhythm</li><li>Staying in time with the song</li><li>Not becoming too fast or too slow</li><li>Holding the beat from beginning to end</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Ask your child to count the beat out loud while playing. It is better to start slower than normal &mdash; when children become nervous, they naturally start playing faster.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#128260;</span><h4>Chord Changes</h4><span class="cmark"><b>12</b><i>marks</i></span></header><p class="clead">How smoothly your child moves from one chord to another.</p><p class="chd">What the judge listens for</p><ul><li>Smooth chord changes</li><li>Less stopping between chords</li><li>Keeping the rhythm while changing</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Find the one chord change your child finds difficult &mdash; for example <b>G &rarr; C</b>. Practise only those two chords, twenty times, without worrying about the full song.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#127908;</span><h4>Singing</h4><span class="cmark"><b>12</b><i>marks</i></span></header><p class="clead">For children performing with vocals, the quality and accuracy of the singing.</p><p class="chd">What the judge listens for</p><ul><li>Singing in tune</li><li>Clear words</li><li>Matching the melody</li><li>Singing confidently while playing</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Three steps: sing the song with no guitar, play the guitar with no singing, then put both together. This helps your child become comfortable doing both at once.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#128266;</span><h4>Soft &amp; Loud / Expression</h4><span class="cmark"><b>10</b><i>marks</i></span></header><p class="clead">A good performance is not loud from beginning to end.</p><p class="chd">What the judge listens for</p><ul><li>Changes in volume</li><li>Expressive playing and singing</li><li>Avoiding a completely flat performance</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Choose one verse to play or sing softly, and one chorus to make stronger. Even two intentional decisions can make a performance far more expressive.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#10084;&#65039;</span><h4>Understanding the Song</h4><span class="cmark"><b>10</b><i>marks</i></span></header><p class="clead">Whether your child understands what they are performing.</p><p class="chd">What the judge listens for</p><ul><li>Understanding the meaning of the song</li><li>Showing the feeling of the song</li><li>Performing the song, not just playing the notes</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Ask your child, <b>&ldquo;What is this song about?&rdquo;</b> and let them explain it in their own words. It helps them connect with the song on stage.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#127775;</span><h4>Stage Presence &amp; Confidence</h4><span class="cmark"><b>10</b><i>marks</i></span></header><p class="clead">This is not about being the loudest or most confident child. It is about how they handle themselves.</p><p class="chd">What the judge listens for</p><ul><li>Walking on to the stage calmly</li><li>Getting ready confidently</li><li>Good posture</li><li>Staying calm during the performance</li><li>Finishing the song properly</li><li>Handling small mistakes without stopping</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Ask your child to perform once in front of the family. Most importantly, teach them: <b>if you make a mistake, keep going.</b> The audience may not even notice it.</p></div></article>
+      <article class="crit"><header><span class="cem" aria-hidden="true">&#128161;</span><h4>Creativity &amp; Own Ideas</h4><span class="cmark"><b>10</b><i>marks</i></span></header><p class="clead">A chance for your child to add a small personal touch.</p><p class="chd">What the judge listens for</p><ul><li>A little originality</li><li>Personal expression</li><li>A creative strumming pattern</li><li>A small change that suits the song</li></ul><div class="cprac"><span class="tag">Practise at home</span><p>Your child can try one different strumming pattern in the final chorus. It does not need to be complicated &mdash; even a small idea of their own shows creativity.</p></div></article>
+    </div>
+
+    <div class="mk-total">
+      <h4>Total &mdash; 100 marks</h4>
+      <table>
+        <tbody><tr><th scope="row"><span aria-hidden="true">&#127928;</span> Guitar Playing &amp; Chord Accuracy</th><td>20</td></tr><tr><th scope="row"><span aria-hidden="true">&#129345;</span> Rhythm &amp; Tempo</th><td>16</td></tr><tr><th scope="row"><span aria-hidden="true">&#128260;</span> Chord Changes</th><td>12</td></tr><tr><th scope="row"><span aria-hidden="true">&#127908;</span> Singing</th><td>12</td></tr><tr><th scope="row"><span aria-hidden="true">&#128266;</span> Soft &amp; Loud / Expression</th><td>10</td></tr><tr><th scope="row"><span aria-hidden="true">&#10084;&#65039;</span> Understanding the Song</th><td>10</td></tr><tr><th scope="row"><span aria-hidden="true">&#127775;</span> Stage Presence &amp; Confidence</th><td>10</td></tr><tr><th scope="row"><span aria-hidden="true">&#128161;</span> Creativity &amp; Own Ideas</th><td>10</td></tr></tbody>
+        <tfoot><tr><th scope="row">Total</th><td>100</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="mk-sheet">
+      <h4><span aria-hidden="true">&#128221;</span> Your child&rsquo;s own marking sheet</h4>
+      <p>After each performance the judge also writes comments by hand on the
+        sheet:</p>
+      <ul>
+        <li><span aria-hidden="true">&#9989;</span> What your child did well</li>
+        <li><span aria-hidden="true">&#128221;</span> What they can improve</li>
+        <li><span aria-hidden="true">&#127919;</span> What they can work on next</li>
+      </ul>
+      <p>Your child receives their own sheet to keep &mdash; something they can
+        look back on and see how they are growing as a young musician.</p>
+    </div>
+
+    <div class="mk-close">
+      <p class="big">This is not an exam. <span aria-hidden="true">&#10084;&#65039;</span></p>
+      <p>It is an opportunity to perform, to gain stage experience, to learn from
+        it, and to be proud of what they prepared.</p>
+      <p><b>Every child who takes part has already done the hard part &mdash;
+        walking on to that stage.</b></p>
+    </div>
   </section>
 
   <section class="admin" hidden id="admin">
