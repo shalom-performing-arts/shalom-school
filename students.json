@@ -15,7 +15,7 @@
     {"id":"s05","name":"Nivein Bandara","key":"MJ8JPE","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Country Roads","artist":"John Denver",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
-    {"id":"s06","name":"Aken Fernando","key":"JE4SPK","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Aji Thapara La Li La","artist":"","note":"Category not given on the entry form — defaulted to Junior, please confirm.",
+    {"id":"s06","name":"Aken Fernando","key":"JE4SPK","category":"Junior","classDay":"Friday","classTime":"3:30 PM","song":"Aji Thapara La Li La","artist":"",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
     {"id":"s07","name":"Subasinghe Arachchilage Andrina Meghan Appuhamy","key":"FCE4Z9","category":"Kids","classDay":"Saturday","classTime":"3:00 PM","song":"You Are My Sunshine","artist":"Christina Perri",
