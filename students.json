@@ -366,13 +366,16 @@
     {"id":"s134","name":"Zendaya De Silva","key":"3RQW28","category":"Kids","classDay":"Sunday","classTime":"11:10 AM","song":"Top of the World","artist":"The Carpenters","note":"Sunday 12:30 PM is not an existing class slot (Sunday runs 11:00 AM, 3:00 PM, 5:00 PM). After noon, so assigned to the Oct 4 afternoon session — Yoana and Evaan De Silva are in the Oct 4 morning session. Please confirm.",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
-        {"id":"s135","name":"Roomini Pasansa","key":"KYMCVZ","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Rain Rain Go Away / Baby Shark","artist":"",
+    {"id":"s135","name":"Roomini Pasansa","key":"KYMCVZ","category":"Kids","classDay":"Sunday","classTime":"11:00 AM","song":"Rain Rain Go Away / Baby Shark","artist":"",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
     {"id":"s136","name":"W.W. Divan Kaveeshara Bandara","key":"5QC4HS","category":"Youth","classDay":"Friday","classTime":"5:00 PM","song":"Country Roads","artist":"John Denver",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}},
-        {"id":"s137","name":"Shenulya Ghauradhi Thoradeniya","key":"GHDUHZ","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"You Are My Sunshine or In the Jungle","artist":"","note":"Song not settled — the parent offered two options. Confirm one title before the running order and the judges' sheets are printed.",
+    {"id":"s137","name":"Shenulya Ghauradhi Thoradeniya","key":"GHDUHZ","category":"Kids","classDay":"Wednesday","classTime":"3:30 PM","song":"You Are My Sunshine or In the Jungle","artist":"","note":"Song not settled — the parent offered two options. Confirm one title before the running order and the judges' sheets are printed.",
+     "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
+               "strengths":"-","improve":"-","adjudicator":"-"}},
+    {"id":"s138","name":"Thiensa Karunarathna","key":"JMFN94","category":"Kids","classDay":"Sunday","classTime":"5:00 PM","song":"You Are My Sunshine","artist":"",
      "result":{"scores":{"playing":"-","rhythm":"-","changes":"-","vocal":"-","dynamics":"-","understanding":"-","stage":"-","creativity":"-"},
                "strengths":"-","improve":"-","adjudicator":"-"}}
   ]
