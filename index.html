@@ -1375,7 +1375,8 @@ footer p{
      A student is one object:
        {"id":"s1","name":"...","category":"Kids|Junior|Youth",
         "classDay":"Wednesday|Thursday|Friday|Saturday|Sunday",
-        "classTime":"4:30 PM","song":"...","artist":"...","key":"A8ZCB5"}
+        "classTime":"4:30 PM","song":"...","artist":"...","age":9,"key":"A8ZCB5"}
+       "age" is optional; "-" or leaving it out means not known yet.
 
      ACCESS CODES.  "key" is the code that opens that student's score sheet.
      Until it is typed in, the sheet on their card stays folded and says only
@@ -1660,6 +1661,11 @@ window.ShalomRosterGen = (function(){
       };
       if(r.sessionId) row.sessionId = r.sessionId;   // manual session override
       if(r.sample) row.sample = true;
+      if(!blankish(r.age)){
+        var age = Number(r.age);
+        if(isFinite(age)) row.age = age;
+        else problems.push(where + " (" + name + "): age \"" + r.age + "\" is not a number — ignored.");
+      }
 
       /* The sheet's access code. Kept if one was given, left off if not —
          the page then derives a stable code from the id, so a student added
